@@ -5,6 +5,8 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
+    "preinstall": "npm install --cpu=wasm32 --arch=wasm32 --no-save @img/sharp-wasm32@0.34.5 sharp@0.34.5 --force",
+    "postinstall": "npm install --cpu=wasm32 --arch=wasm32 wa-sticker-formatter@4.4.4 --save --force",
     "start": "node index.js"
   },
   "keywords": ["whatsapp-bot", "termux","bot"],
@@ -16,8 +18,12 @@
     "file-type": "^18.0.0",
     "form-data": "^4.0.5",
     "qs": "*",
-    "wa-sticker-formatter": "^4.3.2",
-    "whatsappy": "github:deveni0/ws",
-    "sharp": "github:deveni0/sharp-tmx"
+    "wa-sticker-formatter": "^4.4.4",
+    "whatsappy": "github:deveni0/ws"
+  },
+  "overrides": {
+    "wa-sticker-formatter": {
+      "sharp": "0.34.5"
+    }
   }
 }
