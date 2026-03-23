@@ -40,7 +40,7 @@ export async function before(
       });
 
       // لإزالة العضو، يمكنك تفعيل هذا السطر:
-      // await conn.groupParticipantsUpdate(m.chat, [m.sender], 'remove')
+       await conn.groupParticipantsUpdate(m.chat, [m.sender], 'remove')
     }
   }
   return !1;
