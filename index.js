@@ -7,8 +7,8 @@ const client = new Client({
   phoneNumber: '201505997632', // bot number 
   info: { 
    nameBot: "Pomni AI", 
-   nameChannel: "black-afroto ~ 𝐂𝐡𝐚𝐧𝐧𝐞𝐥 🕷️", 
-   idChannel: "120363225356834044@newsletter"
+   nameChannel: "𝐓𝐄𝐀𝐌 𝐵𝛩𝑇 𝐖𝐇𝐀𝐓𝐒𝐀𝐏𝐏 𝐁𝐋𝐀𝐂𝐊 🇪🇬 ~ 𝐂𝐡𝐚𝐧𝐧𝐞𝐥 🕷️", 
+   idChannel: "120363291329944922@newsletter"
 },
   commandsPath: './plugins',
   prefix: [".", "/", "!"],
