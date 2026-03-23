@@ -87,8 +87,8 @@ const menu = async (m, { conn, bot }) => {
         isForwarded: true,
         forwardingScore: 1,
         forwardedNewsletterMessageInfo: {
-            newsletterJid: '120363225356834044@newsletter',
-            newsletterName: '𝐕𝐈𝐈7 ~ 𝐂𝐡𝐚𝐧𝐧𝐞𝐥 🕷️',
+            newsletterJid: '120363291329944922@newsletter',
+            newsletterName: '𝐓𝐄𝐀𝐌 𝐵𝛩𝑇 𝐖𝐇𝐀𝐓𝐒𝐀𝐏𝐏 𝐁𝐋𝐀𝐂𝐊 🇪🇬 ~ 𝐂𝐡𝐚𝐧𝐧𝐞𝐥 🕷️',
             serverMessageId: 0
         },
         externalAdReply: {
