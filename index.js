@@ -15,15 +15,15 @@ const client = new Client({
   owners: [
   // Owner 1
       { name: "Afroto",
-      lid: "247579682029763@lid", jid: "201067999523@s.whatsapp.net" },
+      lid: "264609126691001@lid", jid: "201067999523@s.whatsapp.net" },
       
   // Owner 2
       { name: "black",
-       lid: "221307316789354@lid", jid: "994407941269@s.whatsapp.net" },
+       lid: "77039247822892@lid"", jid: "994407941269@s.whatsapp.net" },
        
   // Owner 3
       { name: "كارثه بيه", 
-      jid: "212776030802@s.whatsapp.net", lid: "50414477168824@lid" }
+      jid: "212776030802@s.whatsapp.net", lid: "3775964147906@lid" }
   ],
   fromMe: false,
   showLogs: true,
