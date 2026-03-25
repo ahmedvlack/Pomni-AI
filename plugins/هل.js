@@ -1,42 +1,33 @@
 let user = a => '@' + a.split('@')[0]
 
-// دالة الرد
-async function replyQuestion(conn, m, text) {
-  if (!text) throw '*أدخــل الـسـؤال !*'
+export default async function handler(m, { groupMetadata, conn }) {
+  // يتأكد أن الرسالة تبدأ بـ "هل"
+  if (!m.text || !m.text.startsWith('هل')) return
 
+  let text = m.text.replace('هل', '').trim()
+  if (!text) return conn.reply(m.chat, '*أدخــل الـسـؤال !*', m)
+
+  // منشن صاحب الرسالة
   let sender = m.sender
 
-  let answers = [
+  // رد عشوائي
+  let answer = pickRandom([
     'احــتـمـال قـلـيـل',
     'نــعم بـالـتـأكـيد',
     'لا أعـتـقـد',
     'مــستـحـيــل',
     'غــالـبـاً نــعــم',
     'مــمـكـن'
-  ]
+  ])
 
-  let answer = answers[Math.floor(Math.random() * answers.length)]
+  // نسبة عشوائية
   let percent = Math.floor(Math.random() * 101)
 
-  let msg = `*هــل ${text}*\n\n*الــأجــابـه :* ${answer}\n*الـنـسـبـة :* ${percent}%`
+  let top = `*هــل ${text}*\n\n*الــأجــابـه :* ${answer}\n*الـنـسـبـة :* ${percent}%`
 
-  await conn.sendMessage(m.chat, { 
-    text: msg, 
-    mentions: [sender] 
-  })
+  conn.reply(m.chat, top, m, { mentions: [sender] })
 }
 
-// مثال استخدام (داخل events الرسائل)
-conn.ev.on('messages.upsert', async ({ messages }) => {
-  let m = messages[0]
-  if (!m.message) return
-
-  let text = m.message.conversation || m.message.extendedTextMessage?.text
-  if (!text) return
-
-  // لو الرسالة تبدأ بـ "هل"
-  if (text.startsWith('هل ')) {
-    let question = text.slice(3)
-    await replyQuestion(conn, m, question)
-  }
-})
+function pickRandom(list) {
+  return list[Math.floor(Math.random() * list.length)]
+}
