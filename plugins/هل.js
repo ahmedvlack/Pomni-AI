@@ -1,36 +1,42 @@
 let user = a => '@' + a.split('@')[0]
 
-function handler(m, { groupMetadata, conn, text }) {
-  if (!text) throw `*أدخــل الـسـؤال !*`
+// دالة الرد
+async function replyQuestion(conn, m, text) {
+  if (!text) throw '*أدخــل الـسـؤال !*'
 
-  // منشن صاحب الرسالة
   let sender = m.sender
 
-  // اختيار رد عشوائي
-  let answer = pickRandom([
+  let answers = [
     'احــتـمـال قـلـيـل',
     'نــعم بـالـتـأكـيد',
     'لا أعـتـقـد',
     'مــستـحـيــل',
     'غــالـبـاً نــعــم',
     'مــمـكـن'
-  ])
+  ]
 
-  // نسبة مئوية عشوائية
-  let percent = Math.floor(Math.random() * 101) // من 0 لـ 100
+  let answer = answers[Math.floor(Math.random() * answers.length)]
+  let percent = Math.floor(Math.random() * 101)
 
-  let top = `*هــل ${text}*\n\n*الــأجــابـه :* ${answer}\n*الـنـسـبـة :* ${percent}%`
+  let msg = `*هــل ${text}*\n\n*الــأجــابـه :* ${answer}\n*الـنـسـبـة :* ${percent}%`
 
-  conn.reply(m.chat, top, m, { mentions: [sender] })
+  await conn.sendMessage(m.chat, { 
+    text: msg, 
+    mentions: [sender] 
+  })
 }
 
-handler.help = handler.command = ['هل']
-handler.tags = ['fun']
-handler.group = true
-handler.limit = 0
+// مثال استخدام (داخل events الرسائل)
+conn.ev.on('messages.upsert', async ({ messages }) => {
+  let m = messages[0]
+  if (!m.message) return
 
-export default handler
+  let text = m.message.conversation || m.message.extendedTextMessage?.text
+  if (!text) return
 
-function pickRandom(list) {
-  return list[Math.floor(Math.random() * list.length)]
-}
+  // لو الرسالة تبدأ بـ "هل"
+  if (text.startsWith('هل ')) {
+    let question = text.slice(3)
+    await replyQuestion(conn, m, question)
+  }
+})
