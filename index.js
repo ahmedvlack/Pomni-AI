@@ -4,10 +4,10 @@ import { group, access } from "./system/control.js";
 /* =========== client ======== */
 
 const client = new Client({
-  phoneNumber: '4915510293991', // bot number 
+  phoneNumber: '84896489418', // bot number 
   info: { 
    nameBot: "Pomni AI", 
-   nameChannel: "𝐓𝐄𝐀𝐌 𝐵𝛩𝑇 𝐖𝐇𝐀𝐓𝐒𝐀𝐏𝐏 𝐁𝐋𝐀𝐂𝐊 🇪🇬 ~ 𝐂𝐡𝐚𝐧𝐧𝐞𝐥 🕷️", 
+   nameChannel: "𝐃𝐀𝐑𝐊 𝐋𝐎𝐑𝐃𝐒 𝐓𝐄𝐀𝐌  🇪🇬 ~ 𝐂𝐡𝐚𝐧𝐧𝐞𝐥 🕷️", 
    idChannel: "120363291329944922@newsletter"
 },
   commandsPath: './plugins',
