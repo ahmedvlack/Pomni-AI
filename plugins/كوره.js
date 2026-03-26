@@ -7,6 +7,9 @@ const reward = 1
 const minTime = 15000
 const timeDecrease = 5000
 
+// 🔊 صوت الجمهور
+const cheerSound = 'https://files.catbox.moe/8njh5p.mp3'
+
 // الزخرفة
 const decoTop = "╮───────────────────────╭ـ"
 const decoBottom = "╯───────────────────────╰ـ"
@@ -18,6 +21,7 @@ let handler = async (m, { conn }) => {
 
     let id = m.chat
 
+    // 🎮 بدء اللعبة
     if (id in conn.quiz) {
         return m.reply(`${decoTop}
 ❌ فيه سؤال شغال بالفعل!
@@ -37,6 +41,8 @@ handler.before = async function (m) {
     let id = m.chat
     if (!(id in this.quiz)) return
 
+    if (!m.text) return
+
     let data = this.quiz[id]
     let json = data[1]
     let answer = json.response.toLowerCase().trim()
@@ -49,6 +55,13 @@ handler.before = async function (m) {
 
         let score = this.quizScore[user]
 
+        // 🔊 صوت الجمهور
+        await this.sendMessage(m.chat, {
+            audio: { url: cheerSound },
+            mimetype: 'audio/mp4',
+            ptt: true
+        }, { quoted: m })
+
         m.reply(`${decoTop}
 ✅ إجابة صحيحة!
 🎯 نقاطك: ${score}/${winScore}
@@ -59,13 +72,30 @@ ${decoBottom}`)
 
         this.quizTime[id] = Math.max(minTime, this.quizTime[id] - timeDecrease)
 
+        // 🏆 عند الفوز (نهاية الجولة)
         if (score >= winScore) {
-            m.reply(`${decoTop}
-🏆 الفائز هو: @${user.split('@')[0]} 🎉
-${decoBottom}`, null, {
-                mentions: [user]
+
+            let scores = this.quizScore || {}
+            let sorted = Object.entries(scores).sort((a, b) => b[1] - a[1])
+
+            let text = `${decoTop}
+🏆 الفائز: @${user.split('@')[0]} 🎉
+
+📊 الترتيب النهائي:
+
+`
+            let mentions = []
+
+            sorted.forEach((u, i) => {
+                text += `${i + 1}- @${u[0].split('@')[0]} : ${u[1]} نقطة\n`
+                mentions.push(u[0])
             })
 
+            text += decoBottom
+
+            await this.reply(m.chat, text, m, { mentions })
+
+            // 🔄 إعادة ضبط
             this.quizScore = {}
             this.quizTime[id] = 60000
             return
@@ -122,7 +152,6 @@ async function sendQuestion(conn, m) {
 ❓ السؤال: ${json.question || 'من هو هذا اللاعب؟'}
 ⏳ الوقت: ${time / 1000} ثانية
 🏆 أول من يصل ${winScore} نقاط يفوز
-📊 اكتب (ترتيب) لرؤية النتائج
 ${decoBottom}`
 
         conn.quiz[id] = [
@@ -148,37 +177,8 @@ ${decoBottom}`)
     }
 }
 
-// ترتيب
-handler.command = /^(كوره|ترتيب)$/i
-handler.help = ['كوره', 'ترتيب']
+handler.command = /^كوره$/i
+handler.help = ['كوره']
 handler.tags = ['game']
-
-handler.run = async (m, { conn, command }) => {
-    if (command == 'ترتيب') {
-        let scores = conn.quizScore || {}
-        let sorted = Object.entries(scores).sort((a, b) => b[1] - a[1])
-
-        if (!sorted.length) {
-            return m.reply(`${decoTop}
-❌ لا يوجد لاعبين بعد
-${decoBottom}`)
-        }
-
-        let text = `${decoTop}
-📊 ترتيب اللاعبين:
-
-`
-        let mentions = []
-
-        sorted.slice(0, 10).forEach((user, i) => {
-            text += `${i + 1}- @${user[0].split('@')[0]} : ${user[1]} نقطة\n`
-            mentions.push(user[0])
-        })
-
-        text += decoBottom
-
-        conn.reply(m.chat, text, m, { mentions })
-    }
-}
 
 export default handler
