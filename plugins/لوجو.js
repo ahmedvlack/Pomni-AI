@@ -1,28 +1,117 @@
 import fetch from "node-fetch";
-let timeout = 60000,
-  poin = 4999;
-const handler = async (m, {
-  conn,
-  command,
-  usedPrefix
-}) => {
-  conn.tebaklogo = conn.tebaklogo ? conn.tebaklogo : {};
-  let id = m.chat;
-  if (id in conn.tebaklogo) return await conn.reply(m.chat, "╮───────────────────────╭ـ\nرد على سؤال الاول يا حبيب قلبى💎\n╯───────────────────────╰", conn.tebaklogo[id][0]), !1;
-  let res = await fetch("https://raw.githubusercontent.com/zyad5yasser/bot-test/master/src/game/لوجو.json"),
-    src = await res.json(),
-    json = {
-      hasil: src[Math.floor(Math.random() * src.length)]
-    },
-    caption = `*${command.toUpperCase()}*\nمــا هــو اســم هــذا الشــعـــار\n\nالـوقـت⏳↞\n╯────────────────⟢ـ\n *${(timeout / 1000).toFixed(2)} ثـانـيـه⌚*\n\n𝐵𝐿𝐴𝐶𝐾 𝐵𝛩𝑇💎\n╯────────────────⟢ـ\n↞الـجـائـزة💰↞: ${poin} XP\n\n╯────────────────⟢ـ \n   `.trim();
-  conn.tebaklogo[id] = [await conn.sendFile(m.chat, json.hasil.data.image, "", caption, m), json, poin, setTimeout(async () => {
-    conn.tebaklogo[id] && await conn.reply(m.chat, `انــتــهــي الـوقـت⏳\nالاجــابــه هيا: *${json.hasil.data.jawaban}*`, conn.tebaklogo[id][0]),
-      delete conn.tebaklogo[id];
-  }, timeout)];
+
+let timeout = 60000;
+let poin = 4999;
+
+async function handler(m, { conn, command }) {
+    if (!global.gameActive) global.gameActive = {};
+
+    const oldGame = global.gameActive[m.chat];
+    if (oldGame) {
+        clearTimeout(oldGame.timeout);
+        delete global.gameActive[m.chat];
+    }
+
+    try {
+        let res = await fetch("https://raw.githubusercontent.com/zyad5yasser/bot-test/master/src/game/لوجو.json");
+        let src = await res.json();
+
+        let random = src[Math.floor(Math.random() * src.length)];
+
+        let image = random.data.image;
+        let answer = random.data.jawaban.toLowerCase();
+
+        let message = await conn.sendMessage(m.chat, {
+            image: { url: image },
+            caption: `
+╮───────────────────────╭ـ
+│ 🧠 *${command.toUpperCase()}*
+│ ❓ *ما هو اسم هذا الشعار؟*
+│ ⏳ *الوقت : 60 ثانية*
+│ 💰 *الجائزة : ${poin} XP*
+╯───────────────────────╰ـ
+            `.trim()
+        });
+
+        global.gameActive[m.chat] = {
+            answer: answer,
+            image: image,
+            messageId: message?.key?.id,
+            timeout: setTimeout(() => {
+                if (global.gameActive[m.chat]) {
+                    let ans = global.gameActive[m.chat].answer;
+                    delete global.gameActive[m.chat];
+
+                    conn.sendMessage(m.chat, {
+                        text: `
+╮───────────────────────╭ـ
+│ ⏰ *انتهى الوقت*
+│ ✅ *الإجابة : ${ans}*
+╯───────────────────────╰ـ
+                        `.trim()
+                    }, { quoted: m });
+                }
+            }, timeout)
+        };
+
+    } catch (e) {
+        console.log(e);
+    }
+}
+
+handler.before = async (m, { conn }) => {
+    if (!m.quoted || !m.text) return false;
+
+    if (!global.gameActive) global.gameActive = {};
+
+    const game = global.gameActive[m.chat];
+    if (!game) return false;
+
+    if (m.quoted.id !== game.messageId) return false;
+
+    let userAnswer = m.text.toLowerCase().trim();
+
+    // انسحاب
+    if (userAnswer === 'انسحاب') {
+        clearTimeout(game.timeout);
+        delete global.gameActive[m.chat];
+
+        await conn.sendMessage(m.chat, {
+            text: `
+╮───────────────────────╭ـ
+│ 🚪 *تم الانسحاب*
+╯───────────────────────╰ـ
+            `.trim()
+        });
+        return true;
+    }
+
+    // إجابة صحيحة
+    if (userAnswer === game.answer) {
+        clearTimeout(game.timeout);
+        delete global.gameActive[m.chat];
+
+        await conn.sendMessage(m.chat, {
+            image: { url: game.image },
+            caption: `
+╮───────────────────────╭ـ
+│ 🎉 *إجابة صحيحة!*
+│ 💰 *كسبت ${poin} XP*
+╯───────────────────────╰ـ
+
+> اكتب *.لوجو* عشان تلعب تاني
+            `.trim()
+        });
+
+        return true;
+    } else {
+        await m.reply("❌ *إجابة غلط حاول تاني*");
+        return true;
+    }
 };
-handler.help = ["tebaklogo"], handler.tags = ["game"], handler.command = /^tebaklogo|لوجو/i;
+
+handler.help = ["لوجو"];
+handler.tags = ["game"];
+handler.command = /^tebaklogo|لوجو/i;
+
 export default handler;
-const buttons = [
-  ["Hint", "/hlog"],
-  ["Nyerah", "menyerah"]
-];
