@@ -1,37 +1,46 @@
 async function handler(m, { conn }) {
     if (!global.gameActive) global.gameActive = {};
 
-    // حذف أي لعبة سابقة
     if (global.gameActive[m.chat]) {
         clearTimeout(global.gameActive[m.chat].timeout);
         delete global.gameActive[m.chat];
     }
 
     try {
-        // قائمة التطبيقات مع روابط PNG صالحة على i.ibb.co
+        // قائمة التطبيقات مع صور Base64
         const data = [
-            { img: "https://i.ibb.co/F3b5bCw/facebook.png", name: "facebook" },
-            { img: "https://i.ibb.co/6N8F1Pm/instagram.png", name: "instagram" },
-            { img: "https://i.ibb.co/Yt4tPjr/whatsapp.png", name: "whatsapp" },
-            { img: "https://i.ibb.co/0Y3yD4c/twitter.png", name: "twitter" },
-            { img: "https://i.ibb.co/3Cc1M3c/snapchat.png", name: "snapchat" },
-            { img: "https://i.ibb.co/Fx0GZ9v/linkedin.png", name: "linkedin" },
-            { img: "https://i.ibb.co/4ZpHf7c/tiktok.png", name: "tiktok" },
-            { img: "https://i.ibb.co/7Q0G7tN/youtube.png", name: "youtube" },
-            { img: "https://i.ibb.co/wcYNK7C/google.png", name: "google" },
-            { img: "https://i.ibb.co/kMJHgP5/spotify.png", name: "spotify" }
+            {
+                name: "facebook",
+                img: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUA..." // اختصر Base64 هنا
+            },
+            {
+                name: "instagram",
+                img: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUA..."
+            },
+            {
+                name: "whatsapp",
+                img: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUA..."
+            },
+            {
+                name: "twitter",
+                img: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUA..."
+            },
+            {
+                name: "snapchat",
+                img: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUA..."
+            }
         ];
 
         const item = data[Math.floor(Math.random() * data.length)];
 
-        // اختبار إرسال الصورة قبل حفظ اللعبة
+        // ارسال السؤال
         const msg = await conn.sendMessage(m.chat, {
-            image: { url: item.img },
+            image: { url: item.img }, // Base64 مباشرة
             caption: `
 ╮───────────────────────╭ـ
-│ ❓ *ما اسم هذا التطبيق؟*
-│ ⏳ *الوقت:* 30 ثانية
-│ 💰 *الجائزة:* 500 نقطة
+│ ❓ ما اسم هذا التطبيق؟
+│ ⏳ الوقت: 30 ثانية
+│ 💰 الجائزة: 500 نقطة
 ╯───────────────────────╰ـ
 رد على الرسالة بالإجابة
             `.trim()
@@ -61,7 +70,7 @@ async function handler(m, { conn }) {
 
     } catch (e) {
         console.log(e);
-        m.reply("❌ حدث خطأ في اللعبة");
+        m.reply('❌ حدث خطأ في اللعبة');
     }
 }
 
@@ -77,23 +86,10 @@ handler.before = async (m) => {
     if (userAnswer === game.answer) {
         clearTimeout(game.timeout);
         delete global.gameActive[m.chat];
-
-        await m.reply(`
-╮───────────────────────╭ـ
-│ 🎉 إجابة صحيحة!
-│ 💰 +500 نقطة
-╯───────────────────────╰ـ
-
-> اكتب *لوجو* للعب مرة أخرى
-        `);
+        await m.reply(`🎉 إجابة صحيحة!\n💰 +500 نقطة\n> اكتب *لوجو* للعب مرة أخرى`);
         return true;
     } else if (m.quoted && m.quoted.id === game.messageId) {
-        await m.reply(`
-╮───────────────────────╭ـ
-│ ❌ إجابة خاطئة
-│ 🔁 حاول مرة أخرى
-╯───────────────────────╰ـ
-        `);
+        await m.reply('❌ إجابة خاطئة\n🔁 حاول مرة أخرى');
         return true;
     }
 
