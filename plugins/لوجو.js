@@ -1,11 +1,12 @@
 import fetch from 'node-fetch';
 
-let timeout = 60000;
+let timeout = 30000;
 let poin = 4999;
 
 async function handler(m, { conn }) {
     if (!global.gameActive) global.gameActive = {};
 
+    // إنهاء أي لعبة سابقة في نفس الشات
     const oldGame = global.gameActive[m.chat];
     if (oldGame) {
         clearTimeout(oldGame.timeout);
@@ -15,31 +16,35 @@ async function handler(m, { conn }) {
     try {
         const res = await fetch('https://raw.githubusercontent.com/zyad5yasser/bot-test/master/src/game/لوجو.json');
 
-        if (!res.ok) throw new Error('fetch failed');
+        if (!res.ok) throw new Error('Failed to fetch data');
 
         const text = await res.text();
         const json = JSON.parse(text);
 
         // دعم أكثر من شكل للبيانات
-        const data = Array.isArray(json) ? json : json.data;
+        const data = Array.isArray(json) ? json : json?.data;
 
-        if (!Array.isArray(data)) throw new Error('invalid data format');
+        if (!Array.isArray(data)) {
+            throw new Error('Invalid JSON structure');
+        }
 
         const random = data[Math.floor(Math.random() * data.length)];
 
-        const image = random.data.image;
-        const answer = random.data.jawaban.toLowerCase();
+        const image = random?.data?.image;
+        const answer = (random?.data?.jawaban || '').toLowerCase();
+
+        if (!image || !answer) throw new Error('Missing image or answer');
 
         const message = await conn.sendMessage(m.chat, {
             image: { url: image },
             caption: `
 ╮───────────────────────╭ـ
 │ ❓ *ما هو اسم هذا الشعار؟*
-│ ⏳ *الوقت : 60 ثانية*
+│ ⏳ *الوقت : 30 ثانية*
 │ 💰 *الجائزة : ${poin} XP*
 ╯───────────────────────╰ـ
 
-> اكتب الإجابة أو "انسحاب"
+> اكتب الإجابة أو: انسحاب
             `.trim()
         });
 
@@ -48,25 +53,26 @@ async function handler(m, { conn }) {
             image,
             messageId: message?.key?.id,
             timeout: setTimeout(() => {
-                if (global.gameActive[m.chat]) {
-                    const ans = global.gameActive[m.chat].answer;
-                    delete global.gameActive[m.chat];
+                const game = global.gameActive[m.chat];
+                if (!game) return;
 
-                    conn.sendMessage(m.chat, {
-                        text: `
+                delete global.gameActive[m.chat];
+
+                conn.sendMessage(m.chat, {
+                    text: `
 ╮───────────────────────╭ـ
 │ ⏰ *انتهى الوقت*
-│ ✅ *الإجابة هي : ${ans}*
+│ ✅ *الإجابة هي : ${game.answer}*
 ╯───────────────────────╰ـ
-                        `.trim()
-                    }, { quoted: m });
-                }
+                    `.trim()
+                }, { quoted: m });
+
             }, timeout)
         };
 
     } catch (e) {
         console.log(e);
-        m.reply("❌ حصل خطأ في جلب السؤال");
+        m.reply("❌ حدث خطأ أثناء جلب السؤال");
     }
 }
 
@@ -76,8 +82,6 @@ handler.before = async (m, { conn }) => {
 
     const game = global.gameActive[m.chat];
     if (!game) return false;
-
-    if (!m.quoted || m.quoted.id !== game.messageId) return false;
 
     const userAnswer = m.text.toLowerCase().trim();
 
@@ -109,14 +113,16 @@ handler.before = async (m, { conn }) => {
 │ 🎉 *إجابة صحيحة!*
 │ 💰 *كسبت ${poin} XP*
 ╯───────────────────────╰ـ
+
+> اكتب .لوجو للعب مرة أخرى
             `.trim()
         });
 
         return true;
-    } else {
-        await m.reply("❌ *إجابة خاطئة حاول مرة أخرى*");
-        return true;
     }
+
+    // إجابة خاطئة
+    return m.reply("❌ *إجابة خاطئة حاول مرة أخرى*");
 };
 
 handler.help = ['لوجو'];
