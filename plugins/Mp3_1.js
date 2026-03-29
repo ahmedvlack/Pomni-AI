@@ -1,21 +1,13 @@
-let handler = async (m, { conn }) => {
-    const vn = './media/بودعك.mp3'
+let handler = async (m, { conn, usedPrefix, __dirname, text, isPrems }) => {
 
-    conn.sendPresenceUpdate('recording', m.chat)
+    const vn = './media/b.mp3';
+  conn.sendPresenceUpdate('recording', m.chat);
+  conn.sendMessage(m.chat, {audio: {url: vn}, ptt: true, mimetype: 'audio/mpeg', fileName: `deja de llorar.mp3`}, {quoted: m});
+};
 
-    await conn.sendMessage(
-        m.chat,
-        {
-            audio: { url: vn },
-            ptt: true,
-            mimetype: 'audio/mpeg',
-            fileName: 'deja de llorar.mp3'
-        },
-        { quoted: m }
-    )
-}
-
-// أوامر ثابتة فقط
-handler.command = ['بودعك', 'الوداع']
-
+handler.help = ['notification']
+handler.tags = ['notification']
+handler.command = ['الوداع ','بودعك'] 
+handler.customPrefix = /^(بودعك|الوداع)$/i;
+handler.command = new RegExp;
 export default handler
