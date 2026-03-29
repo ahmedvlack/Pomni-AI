@@ -1,84 +1,97 @@
+import axios from 'axios';
+
 async function handler(m, { conn }) {
-    if (!global.gameActive) {
-        global.gameActive = {};
-    }
+    if (!global.gameActive) global.gameActive = {};
     
-    const oldGame = global.gameActive[m.chat];
-    if (oldGame) {
-        clearTimeout(oldGame.timeout);
+    // إنهاء اللعبة القديمة
+    if (global.gameActive[m.chat]) {
+        clearTimeout(global.gameActive[m.chat].timeout);
         delete global.gameActive[m.chat];
     }
-    
-    // رابط اللوجوهات
-    const data = await (await fetch("https://raw.githubusercontent.com/zyad5yasser/bot-test/master/src/game/لوجو.json")).json();
-    
-    const item = data[Math.floor(Math.random() * data.length)];
-    
-    const message = await conn.sendMessage(m.chat, {
-        image: { url: item.image },
-        caption: `
+
+    try {
+        // رابط JSON
+        const res = await axios.get('https://raw.githubusercontent.com/zyad5yasser/bot-test/master/src/game/لوجو.json');
+        const data = res.data;
+
+        if (!Array.isArray(data)) {
+            return m.reply("❌ خطأ في ملف الأسئلة");
+        }
+
+        const item = data[Math.floor(Math.random() * data.length)];
+
+        // دعم response أو answer
+        const answer = (item.response || item.answer || "").toLowerCase();
+
+        if (!answer || !item.image) {
+            return m.reply("❌ سؤال غير صالح في JSON");
+        }
+
+        const msg = await conn.sendMessage(m.chat, {
+            image: { url: item.image },
+            caption: `
 ╮───────────────────────╭ـ
 │ ❓ *ما اسم هذا التطبيق؟*
 │ ⏳ *الوقت:* 30 ثانية
 │ 💰 *الجائزة:* 500 نقطة
 ╯───────────────────────╰ـ
 رد على الرسالة بالإجابة
-        `.trim()
-    });
-    
-    global.gameActive[m.chat] = {
-        answer: item.response.toLowerCase(),
-        image: item.image,
-        messageId: message?.key?.id,
-        timeout: setTimeout(() => {
-            if (global.gameActive[m.chat]) {
-                const ans = global.gameActive[m.chat].answer;
-                delete global.gameActive[m.chat];
-                conn.sendMessage(m.chat, { 
-                    text: `
+            `.trim()
+        });
+
+        global.gameActive[m.chat] = {
+            answer,
+            image: item.image,
+            messageId: msg.key.id,
+            timeout: setTimeout(() => {
+                if (global.gameActive[m.chat]) {
+                    let ans = global.gameActive[m.chat].answer;
+                    delete global.gameActive[m.chat];
+
+                    conn.sendMessage(m.chat, {
+                        text: `
 ╮───────────────────────╭ـ
 │ ⏰ *انتهى الوقت*
 │ ✅ *الإجابة:* ${ans}
 ╯───────────────────────╰ـ
-                    `.trim()
-                }, { quoted: m });
-            }
-        }, 30000)
-    };
+                        `.trim()
+                    }, { quoted: m });
+                }
+            }, 30000)
+        };
+
+    } catch (e) {
+        console.log(e);
+        m.reply("❌ فشل تحميل الأسئلة من الرابط");
+    }
 }
 
 handler.before = async (m, { conn }) => {
     if (!m.quoted || !m.text) return false;
-    
-    if (!global.gameActive) {
-        global.gameActive = {};
-    }
-    
-    const game = global.gameActive[m.chat];
+
+    let game = global.gameActive?.[m.chat];
     if (!game) return false;
-    
+
     if (m.quoted.id !== game.messageId) return false;
-    
-    const userAnswer = m.text.toLowerCase().trim();
-    
+
+    let userAnswer = m.text.toLowerCase().trim();
+
     if (userAnswer === game.answer) {
         clearTimeout(game.timeout);
         delete global.gameActive[m.chat];
-        
+
         await conn.sendMessage(m.chat, {
             image: { url: game.image },
             caption: `
 ╮───────────────────────╭ـ
 │ 🎉 *إجابة صحيحة!*
 │ 💰 *+500 نقطة*
-│ 🚀 *أحسنت!*
 ╯───────────────────────╰ـ
 
-> اكتب *لوجو* عشان تلعب تاني
+> اكتب *لوجو* للعب مرة أخرى
             `.trim()
         });
-        return true;
-        
+
     } else {
         await m.reply(`
 ╮───────────────────────╭ـ
@@ -86,12 +99,12 @@ handler.before = async (m, { conn }) => {
 │ 🔁 *حاول مرة أخرى*
 ╯───────────────────────╰ـ
         `.trim());
-        return true;
     }
+
+    return true;
 };
 
-handler.usage = ["لوجو"];
-handler.category = "games";
 handler.command = ['لوجو','logo'];
+handler.category = 'games';
 
 export default handler;
