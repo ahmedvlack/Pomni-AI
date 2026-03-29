@@ -8,37 +8,36 @@ async function handler(m, { conn }) {
 
     try {
         const data = [
-            { name: "facebook", img: "https://i.ibb.co/6tq7wqZ/facebook.jpg" },
-            { name: "instagram", img: "https://i.ibb.co/0Y8r4gX/instagram.jpg" },
-            { name: "whatsapp", img: "https://i.ibb.co/7bYx5Rf/whatsapp.jpg" },
-            { name: "twitter", img: "https://i.ibb.co/LN3X0vB/twitter.jpg" },
-            { name: "snapchat", img: "https://i.ibb.co/3NfGd5k/snapchat.jpg" },
-            { name: "linkedin", img: "https://i.ibb.co/3f4KcS0/linkedin.jpg" },
-            { name: "tiktok", img: "https://i.ibb.co/vd1w0tR/tiktok.jpg" },
-            { name: "youtube", img: "https://i.ibb.co/pR5r5yJ/youtube.jpg" },
-            { name: "google", img: "https://i.ibb.co/xYxZJZC/google.jpg" },
-            { name: "spotify", img: "https://i.ibb.co/7p4k1yH/spotify.jpg" },
-            { name: "amazon", img: "https://i.ibb.co/c3kQm7B/amazon.jpg" },
-            { name: "paypal", img: "https://i.ibb.co/YbJ9TzS/paypal.jpg" },
-            { name: "netflix", img: "https://i.ibb.co/6gXqRzJ/netflix.jpg" },
-            { name: "airbnb", img: "https://i.ibb.co/5kY4HcB/airbnb.jpg" },
-            { name: "uber", img: "https://i.ibb.co/ThzF1qX/uber.jpg" },
-            { name: "discord", img: "https://i.ibb.co/8bJ4fR6/discord.jpg" },
-            { name: "reddit", img: "https://i.ibb.co/YQG5szF/reddit.jpg" },
-            { name: "shazam", img: "https://i.ibb.co/B6V1m3h/shazam.jpg" },
-            { name: "telegram", img: "https://i.ibb.co/s3jK2kL/telegram.jpg" },
-            { name: "pinterest", img: "https://i.ibb.co/2kY1bJq/pinterest.jpg" },
-            { name: "twitch", img: "https://i.ibb.co/G5F7J8S/twitch.jpg" },
-            { name: "skype", img: "https://i.ibb.co/3mKx2vB/skype.jpg" },
-            { name: "viber", img: "https://i.ibb.co/4ZfW1qJ/viber.jpg" },
-            { name: "soundcloud", img: "https://i.ibb.co/1Lz7K8N/soundcloud.jpg" },
-            { name: "snapseed", img: "https://i.ibb.co/0v1Q2yF/snapseed.jpg" },
-            { name: "evernote", img: "https://i.ibb.co/TK2x0KJ/evernote.jpg" },
-            { name: "skyscanner", img: "https://i.ibb.co/f4sY7Bq/skyscanner.jpg" },
-            { name: "tripadvisor", img: "https://i.ibb.co/Z6xF9YJ/tripadvisor.jpg" },
-            { name: "zoom", img: "https://i.ibb.co/bQY7H8L/zoom.jpg" },
-            { name: "quora", img: "https://i.ibb.co/3kR9J1T/quora.jpg" },
-            { name: "slack", img: "https://i.ibb.co/LnG5h4R/slack.jpg" }
+            { name: "facebook", img: "https://i.postimg.cc/4NdgpQq2/facebook.jpg" },
+            { name: "instagram", img: "https://i.postimg.cc/8c7v1s1Q/instagram.jpg" },
+            { name: "whatsapp", img: "https://i.postimg.cc/Zn4g8Fvq/whatsapp.jpg" },
+            { name: "twitter", img: "https://i.postimg.cc/VskZk4Lc/twitter.jpg" },
+            { name: "snapchat", img: "https://i.postimg.cc/2yN2svkd/snapchat.jpg" },
+            { name: "linkedin", img: "https://i.postimg.cc/HkGfqT3W/linkedin.jpg" },
+            { name: "tiktok", img: "https://i.postimg.cc/0QLqPvSd/tiktok.jpg" },
+            { name: "youtube", img: "https://i.postimg.cc/SRmJgVxJ/youtube.jpg" },
+            { name: "google", img: "https://i.postimg.cc/Gpq5z4m9/google.jpg" },
+            { name: "spotify", img: "https://i.postimg.cc/9fpyh4Mn/spotify.jpg" },
+            { name: "amazon", img: "https://i.postimg.cc/x8nNjfRr/amazon.jpg" },
+            { name: "paypal", img: "https://i.postimg.cc/pV6Wn0Mh/paypal.jpg" },
+            { name: "netflix", img: "https://i.postimg.cc/wx9QvMrG/netflix.jpg" },
+            { name: "airbnb", img: "https://i.postimg.cc/zfL5hF8r/airbnb.jpg" },
+            { name: "uber", img: "https://i.postimg.cc/bwvbQfQ9/uber.jpg" },
+            { name: "discord", img: "https://i.postimg.cc/5yhP0vND/discord.jpg" },
+            { name: "reddit", img: "https://i.postimg.cc/Kv7q9xWg/reddit.jpg" },
+            { name: "shazam", img: "https://i.postimg.cc/4x0QrxBB/shazam.jpg" },
+            { name: "telegram", img: "https://i.postimg.cc/3xYgG3sF/telegram.jpg" },
+            { name: "pinterest", img: "https://i.postimg.cc/pLYtJT6S/pinterest.jpg" },
+            { name: "twitch", img: "https://i.postimg.cc/RCW647M8/twitch.jpg" },
+            { name: "skype", img: "https://i.postimg.cc/kGB6t6BD/skype.jpg" },
+            { name: "viber", img: "https://i.postimg.cc/1RDmS9Q4/viber.jpg" },
+            { name: "soundcloud", img: "https://i.postimg.cc/43D1zD5S/soundcloud.jpg" },
+            { name: "snapseed", img: "https://i.postimg.cc/9f4fMyWX/snapseed.jpg" },
+            { name: "evernote", img: "https://i.postimg.cc/SRRV1qZP/evernote.jpg" },
+            { name: "skyscanner", img: "https://i.postimg.cc/4N9C2RkM/skyscanner.jpg" },
+            { name: "tripadvisor", img: "https://i.postimg.cc/05xFFdxD/tripadvisor.jpg" },
+            { name: "zoom", img: "https://i.postimg.cc/3R5YQyZq/zoom.jpg" },
+            { name: "slack", img: "https://i.postimg.cc/Vv8BqBf5/slack.jpg" }
         ];
 
         const item = data[Math.floor(Math.random() * data.length)];
@@ -47,9 +46,9 @@ async function handler(m, { conn }) {
             image: { url: item.img },
             caption: `
 ╮───────────────────────╭ـ
-│ ❓ ما اسم هذا التطبيق؟
-│ ⏳ الوقت: 30 ثانية
-│ 💰 الجائزة: 500 نقطة
+│ ❓ *ما اسم هذا التطبيق؟*
+│ ⏳ *الوقت:* 30 ثانية
+│ 💰 *الجائزة:* 500 نقطة
 ╯───────────────────────╰ـ
 رد على الرسالة بالإجابة
             `.trim()
@@ -70,7 +69,7 @@ async function handler(m, { conn }) {
 
     } catch (e) {
         console.log(e);
-        m.reply('❌ حدث خطأ في اللعبة');
+        m.reply("❌ حدث خطأ في اللعبة");
     }
 }
 
@@ -87,14 +86,14 @@ handler.before = async (m) => {
         await m.reply(`🎉 إجابة صحيحة!\n💰 +500 نقطة\n> اكتب *لوجو* للعب مرة أخرى`);
         return true;
     } else if (m.quoted && m.quoted.id === game.messageId) {
-        await m.reply('❌ إجابة خاطئة\n🔁 حاول مرة أخرى');
+        await m.reply("❌ إجابة خاطئة\n🔁 حاول مرة أخرى");
         return true;
     }
 
     return false;
 };
 
-handler.command = ['لوجو','logo'];
-handler.category = 'games';
+handler.command = ["لوجو","logo"];
+handler.category = "games";
 
 export default handler;
