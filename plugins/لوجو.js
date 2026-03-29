@@ -8,43 +8,23 @@ async function handler(m, { conn }) {
     }
 
     try {
-        // بيانات التطبيقات داخل الكود مع صور PNG/JPG صالحة
+        // قائمة التطبيقات مع روابط PNG صالحة على i.ibb.co
         const data = [
-            { img: "https://upload.wikimedia.org/wikipedia/commons/0/05/Facebook_Logo_%282019%29.png", name: "facebook" },
-            { img: "https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png", name: "instagram" },
-            { img: "https://upload.wikimedia.org/wikipedia/commons/4/44/WhatsApp_icon.png", name: "whatsapp" },
-            { img: "https://upload.wikimedia.org/wikipedia/commons/8/82/Twitter_icon.png", name: "twitter" },
-            { img: "https://upload.wikimedia.org/wikipedia/commons/5/51/Snapchat_logo.png", name: "snapchat" },
-            { img: "https://upload.wikimedia.org/wikipedia/commons/c/c2/LinkedIn_logo_initials.png", name: "linkedin" },
-            { img: "https://upload.wikimedia.org/wikipedia/commons/5/5f/TikTok_logo.png", name: "tiktok" },
-            { img: "https://upload.wikimedia.org/wikipedia/commons/7/7e/YouTube_social_white_squircle_%282017%29.png", name: "youtube" },
-            { img: "https://upload.wikimedia.org/wikipedia/commons/1/19/Google_Logo.png", name: "google" },
-            { img: "https://upload.wikimedia.org/wikipedia/commons/2/2f/Spotify_logo_with_text.png", name: "spotify" },
-            { img: "https://upload.wikimedia.org/wikipedia/commons/9/95/Netflix_2015_logo.png", name: "netflix" },
-            { img: "https://upload.wikimedia.org/wikipedia/commons/1/14/Telegram_logo.png", name: "telegram" },
-            { img: "https://upload.wikimedia.org/wikipedia/commons/2/21/Reddit_logo_orange.png", name: "reddit" },
-            { img: "https://upload.wikimedia.org/wikipedia/commons/6/6f/Dropbox_icon_2017.png", name: "dropbox" },
-            { img: "https://upload.wikimedia.org/wikipedia/commons/8/89/Adobe_Creative_Cloud_icon.png", name: "adobe" },
-            { img: "https://upload.wikimedia.org/wikipedia/commons/3/3c/PayPal_logo.png", name: "paypal" },
-            { img: "https://upload.wikimedia.org/wikipedia/commons/5/59/Zoom_logo.png", name: "zoom" },
-            { img: "https://upload.wikimedia.org/wikipedia/commons/1/18/Pinterest-logo.png", name: "pinterest" },
-            { img: "https://upload.wikimedia.org/wikipedia/commons/0/0b/Discord_logo_wordmark.png", name: "discord" },
-            { img: "https://upload.wikimedia.org/wikipedia/commons/0/0e/Slack_logo.png", name: "slack" },
-            { img: "https://upload.wikimedia.org/wikipedia/commons/c/cd/Twitch_glitch_logo.png", name: "twitch" },
-            { img: "https://upload.wikimedia.org/wikipedia/commons/9/9a/Opera_browser_logo_2015.png", name: "opera" },
-            { img: "https://upload.wikimedia.org/wikipedia/commons/3/3c/Edge_logo_%282019%29.png", name: "edge" },
-            { img: "https://upload.wikimedia.org/wikipedia/commons/3/3a/Skype_logo.png", name: "skype" },
-            { img: "https://upload.wikimedia.org/wikipedia/commons/6/6f/Google_Chrome_icon_%282011%29.png", name: "chrome" },
-            { img: "https://upload.wikimedia.org/wikipedia/commons/4/43/Microsoft_Office_logo.png", name: "office" },
-            { img: "https://upload.wikimedia.org/wikipedia/commons/7/70/Viber_logo.png", name: "viber" },
-            { img: "https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.png", name: "apple" },
-            { img: "https://upload.wikimedia.org/wikipedia/commons/0/0c/Adobe_Photoshop_CC_icon.png", name: "photoshop" },
-            { img: "https://upload.wikimedia.org/wikipedia/commons/4/4f/Zoom_Communications_logo.png", name: "zoom2" }
+            { img: "https://i.ibb.co/F3b5bCw/facebook.png", name: "facebook" },
+            { img: "https://i.ibb.co/6N8F1Pm/instagram.png", name: "instagram" },
+            { img: "https://i.ibb.co/Yt4tPjr/whatsapp.png", name: "whatsapp" },
+            { img: "https://i.ibb.co/0Y3yD4c/twitter.png", name: "twitter" },
+            { img: "https://i.ibb.co/3Cc1M3c/snapchat.png", name: "snapchat" },
+            { img: "https://i.ibb.co/Fx0GZ9v/linkedin.png", name: "linkedin" },
+            { img: "https://i.ibb.co/4ZpHf7c/tiktok.png", name: "tiktok" },
+            { img: "https://i.ibb.co/7Q0G7tN/youtube.png", name: "youtube" },
+            { img: "https://i.ibb.co/wcYNK7C/google.png", name: "google" },
+            { img: "https://i.ibb.co/kMJHgP5/spotify.png", name: "spotify" }
         ];
 
         const item = data[Math.floor(Math.random() * data.length)];
 
-        // ارسال السؤال
+        // اختبار إرسال الصورة قبل حفظ اللعبة
         const msg = await conn.sendMessage(m.chat, {
             image: { url: item.img },
             caption: `
@@ -85,7 +65,7 @@ async function handler(m, { conn }) {
     }
 }
 
-// التحقق من الإجابة سواء مقتبسة أو مباشرة
+// التحقق من الإجابة
 handler.before = async (m) => {
     if (!m.text) return false;
 
