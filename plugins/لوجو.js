@@ -6,6 +6,7 @@ let poin = 4999;
 async function handler(m, { conn }) {
     if (!global.gameActive) global.gameActive = {};
 
+    // إنهاء أي لعبة قديمة في نفس الشات
     const oldGame = global.gameActive[m.chat];
     if (oldGame) {
         clearTimeout(oldGame.timeout);
@@ -31,6 +32,8 @@ async function handler(m, { conn }) {
 │ ⏳ *الوقت : 60 ثانية*
 │ 💰 *الجائزة : ${poin} XP*
 ╯───────────────────────╰ـ
+
+> اكتب الإجابة أو "انسحاب"
             `.trim()
         });
 
@@ -57,6 +60,7 @@ async function handler(m, { conn }) {
 
     } catch (e) {
         console.log(e);
+        m.reply("❌ حصل خطأ في جلب السؤال");
     }
 }
 
@@ -67,6 +71,7 @@ handler.before = async (m, { conn }) => {
     const game = global.gameActive[m.chat];
     if (!game) return false;
 
+    // نتحقق من نفس الرسالة (reply) أو أي رسالة داخل الشات
     if (!m.quoted || m.quoted.id !== game.messageId) return false;
 
     const userAnswer = m.text.toLowerCase().trim();
@@ -99,7 +104,7 @@ handler.before = async (m, { conn }) => {
 │ 💰 *كسبت ${poin} XP*
 ╯───────────────────────╰ـ
 
-> اكتب *.عين* أو الأمر مرة أخرى للعب
+> اكتب *.لوجو* للعب مرة أخرى
             `.trim()
         });
 
@@ -110,8 +115,8 @@ handler.before = async (m, { conn }) => {
     }
 };
 
-handler.help = ['tebaklogo'];
+handler.help = ['لوجو'];
 handler.tags = ['game'];
-handler.command = /^(tebaklogo|لوجو)$/i;
+handler.command = /^(لوجو)$/i;
 
 export default handler;
