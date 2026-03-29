@@ -1,23 +1,26 @@
-import axios from 'axios';
-
 async function handler(m, { conn }) {
     if (!global.gameActive) global.gameActive = {};
-    
+
+    // حذف اللعبة القديمة
     if (global.gameActive[m.chat]) {
         clearTimeout(global.gameActive[m.chat].timeout);
         delete global.gameActive[m.chat];
     }
 
     try {
-        const res = await axios.get('https://raw.githubusercontent.com/zyad5yasser/bot-test/master/src/game/logo.json');
-        const data = res.data;
+        // رابط JSON (مشفر)
+        const res = await fetch('https://raw.githubusercontent.com/zyad5yasser/bot-test/master/src/game/%D9%84%D9%88%D8%AC%D9%88.json');
+        const data = await res.json();
 
         if (!Array.isArray(data)) {
             return m.reply("❌ خطأ في ملف الأسئلة");
         }
 
         const item = data[Math.floor(Math.random() * data.length)];
-        const answer = (item.response || item.answer).toLowerCase();
+
+        if (!item.image || !item.response) {
+            return m.reply("❌ سؤال غير صالح");
+        }
 
         const msg = await conn.sendMessage(m.chat, {
             image: { url: item.image },
@@ -32,7 +35,7 @@ async function handler(m, { conn }) {
         });
 
         global.gameActive[m.chat] = {
-            answer,
+            answer: item.response.toLowerCase(),
             image: item.image,
             messageId: msg.key.id,
             timeout: setTimeout(() => {
@@ -54,10 +57,11 @@ async function handler(m, { conn }) {
 
     } catch (e) {
         console.log(e);
-        m.reply("❌ فشل تحميل الأسئلة");
+        m.reply("❌ فشل تحميل الأسئلة من الرابط");
     }
 }
 
+// التحقق من الإجابة
 handler.before = async (m, { conn }) => {
     if (!m.quoted || !m.text) return false;
 
@@ -68,6 +72,7 @@ handler.before = async (m, { conn }) => {
 
     let userAnswer = m.text.toLowerCase().trim();
 
+    // إجابة صحيحة
     if (userAnswer === game.answer) {
         clearTimeout(game.timeout);
         delete global.gameActive[m.chat];
@@ -80,7 +85,7 @@ handler.before = async (m, { conn }) => {
 │ 💰 *+500 نقطة*
 ╯───────────────────────╰ـ
 
-> اكتب *لوجو* للعب مرة أخرى
+> اكتب *لوجو* عشان تلعب تاني
             `.trim()
         });
 
