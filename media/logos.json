@@ -1,0 +1,162 @@
+[
+  {
+    "name": "facebook",
+    "img": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAB"
+  },
+  {
+    "name": "instagram",
+    "img": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAB"
+  },
+  {
+    "name": "whatsapp",
+    "img": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAB"
+  },
+  {
+    "name": "telegram",
+    "img": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAB"
+  },
+  {
+    "name": "twitter",
+    "img": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAB"
+  },
+  {
+    "name": "snapchat",
+    "img": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAB"
+  },
+  {
+    "name": "tiktok",
+    "img": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAB"
+  },
+  {
+    "name": "youtube",
+    "img": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAB"
+  },
+  {
+    "name": "gmail",
+    "img": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAB"
+  },
+  {
+    "name": "google",
+    "img": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAB"
+  },
+  {
+    "name": "maps",
+    "img": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAB"
+  },
+  {
+    "name": "drive",
+    "img": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAB"
+  },
+  {
+    "name": "chrome",
+    "img": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAB"
+  },
+  {
+    "name": "playstore",
+    "img": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAB"
+  },
+  {
+    "name": "netflix",
+    "img": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAB"
+  },
+  {
+    "name": "spotify",
+    "img": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAB"
+  },
+  {
+    "name": "linkedin",
+    "img": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAB"
+  },
+  {
+    "name": "pinterest",
+    "img": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAB"
+  },
+  {
+    "name": "reddit",
+    "img": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAB"
+  },
+  {
+    "name": "discord",
+    "img": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAB"
+  },
+  {
+    "name": "zoom",
+    "img": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAB"
+  },
+  {
+    "name": "skype",
+    "img": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAB"
+  },
+  {
+    "name": "messenger",
+    "img": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAB"
+  },
+  {
+    "name": "viber",
+    "img": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAB"
+  },
+  {
+    "name": "uber",
+    "img": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAB"
+  },
+  {
+    "name": "lyft",
+    "img": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAB"
+  },
+  {
+    "name": "airbnb",
+    "img": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAB"
+  },
+  {
+    "name": "paypal",
+    "img": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAB"
+  },
+  {
+    "name": "amazon",
+    "img": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAB"
+  },
+  {
+    "name": "aliexpress",
+    "img": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAB"
+  },
+  {
+    "name": "ebay",
+    "img": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAB"
+  },
+  {
+    "name": "dropbox",
+    "img": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAB"
+  },
+  {
+    "name": "twitch",
+    "img": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAB"
+  },
+  {
+    "name": "github",
+    "img": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAB"
+  },
+  {
+    "name": "gitlab",
+    "img": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAB"
+  },
+  {
+    "name": "stackoverflow",
+    "img": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAB"
+  },
+  {
+    "name": "notion",
+    "img": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAB"
+  },
+  {
+    "name": "slack",
+    "img": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAB"
+  },
+  {
+    "name": "figma",
+    "img": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAB"
+  },
+  {
+    "name": "opera",
+    "img": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAB"
+  }
+]
