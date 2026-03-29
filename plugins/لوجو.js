@@ -8,40 +8,41 @@ async function handler(m, { conn }) {
 
     try {
         const data = [
-            { name: "facebook", img: "https://i.postimg.cc/4NdgpQq2/facebook.jpg" },
-            { name: "instagram", img: "https://i.postimg.cc/8c7v1s1Q/instagram.jpg" },
-            { name: "whatsapp", img: "https://i.postimg.cc/Zn4g8Fvq/whatsapp.jpg" },
-            { name: "twitter", img: "https://i.postimg.cc/VskZk4Lc/twitter.jpg" },
-            { name: "snapchat", img: "https://i.postimg.cc/2yN2svkd/snapchat.jpg" },
-            { name: "linkedin", img: "https://i.postimg.cc/HkGfqT3W/linkedin.jpg" },
-            { name: "tiktok", img: "https://i.postimg.cc/0QLqPvSd/tiktok.jpg" },
-            { name: "youtube", img: "https://i.postimg.cc/SRmJgVxJ/youtube.jpg" },
-            { name: "google", img: "https://i.postimg.cc/Gpq5z4m9/google.jpg" },
-            { name: "spotify", img: "https://i.postimg.cc/9fpyh4Mn/spotify.jpg" },
-            { name: "amazon", img: "https://i.postimg.cc/x8nNjfRr/amazon.jpg" },
-            { name: "paypal", img: "https://i.postimg.cc/pV6Wn0Mh/paypal.jpg" },
-            { name: "netflix", img: "https://i.postimg.cc/wx9QvMrG/netflix.jpg" },
-            { name: "airbnb", img: "https://i.postimg.cc/zfL5hF8r/airbnb.jpg" },
-            { name: "uber", img: "https://i.postimg.cc/bwvbQfQ9/uber.jpg" },
-            { name: "discord", img: "https://i.postimg.cc/5yhP0vND/discord.jpg" },
-            { name: "reddit", img: "https://i.postimg.cc/Kv7q9xWg/reddit.jpg" },
-            { name: "shazam", img: "https://i.postimg.cc/4x0QrxBB/shazam.jpg" },
-            { name: "telegram", img: "https://i.postimg.cc/3xYgG3sF/telegram.jpg" },
-            { name: "pinterest", img: "https://i.postimg.cc/pLYtJT6S/pinterest.jpg" },
-            { name: "twitch", img: "https://i.postimg.cc/RCW647M8/twitch.jpg" },
-            { name: "skype", img: "https://i.postimg.cc/kGB6t6BD/skype.jpg" },
-            { name: "viber", img: "https://i.postimg.cc/1RDmS9Q4/viber.jpg" },
-            { name: "soundcloud", img: "https://i.postimg.cc/43D1zD5S/soundcloud.jpg" },
-            { name: "snapseed", img: "https://i.postimg.cc/9f4fMyWX/snapseed.jpg" },
-            { name: "evernote", img: "https://i.postimg.cc/SRRV1qZP/evernote.jpg" },
-            { name: "skyscanner", img: "https://i.postimg.cc/4N9C2RkM/skyscanner.jpg" },
-            { name: "tripadvisor", img: "https://i.postimg.cc/05xFFdxD/tripadvisor.jpg" },
-            { name: "zoom", img: "https://i.postimg.cc/3R5YQyZq/zoom.jpg" },
-            { name: "slack", img: "https://i.postimg.cc/Vv8BqBf5/slack.jpg" }
+            { name: "facebook", img: "https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg.png" },
+            { name: "instagram", img: "https://upload.wikimedia.org/wikipedia/commons/e/e7/Instagram_logo_2016.svg.png" },
+            { name: "whatsapp", img: "https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg.png" },
+            { name: "twitter", img: "https://upload.wikimedia.org/wikipedia/commons/6/6f/Twitter_Logo_2012.svg.png" },
+            { name: "telegram", img: "https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg.png" },
+            { name: "youtube", img: "https://upload.wikimedia.org/wikipedia/commons/b/b8/YouTube_Logo_2017.svg.png" },
+            { name: "linkedin", img: "https://upload.wikimedia.org/wikipedia/commons/c/ca/LinkedIn_logo_initials.png" },
+            { name: "tiktok", img: "https://upload.wikimedia.org/wikipedia/commons/a/a9/TikTok_logo.png" },
+            { name: "snapchat", img: "https://upload.wikimedia.org/wikipedia/en/a/ad/Snapchat_logo.svg.png" },
+            { name: "reddit", img: "https://upload.wikimedia.org/wikipedia/en/thumb/5/58/Reddit_logo_new.svg/120px-Reddit_logo_new.svg.png" },
+            { name: "pinterest", img: "https://upload.wikimedia.org/wikipedia/commons/3/35/Pinterest_logo.png" },
+            { name: "discord", img: "https://upload.wikimedia.org/wikipedia/commons/8/88/Discord_logo.svg.png" },
+            { name: "skype", img: "https://upload.wikimedia.org/wikipedia/commons/e/e3/Skype_icon_%282021%29.svg.png" },
+            { name: "viber", img: "https://upload.wikimedia.org/wikipedia/commons/4/45/Viber_logo.png" },
+            { name: "soundcloud", img: "https://upload.wikimedia.org/wikipedia/commons/2/20/SoundCloud_logo.svg.png" },
+            { name: "slack", img: "https://upload.wikimedia.org/wikipedia/commons/7/76/Slack_Icon.png" },
+            { name: "zoom", img: "https://upload.wikimedia.org/wikipedia/commons/3/3c/Zoom_Communications_Logo.png" },
+            { name: "spotify", img: "https://upload.wikimedia.org/wikipedia/commons/1/19/Spotify_logo_without_text.svg.png" },
+            { name: "netflix", img: "https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg.png" },
+            { name: "apple", img: "https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg.png" },
+            { name: "google", img: "https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg.png" },
+            { name: "linkedin2", img: "https://upload.wikimedia.org/wikipedia/commons/0/01/LinkedIn_Logo.svg.png" },
+            { name: "messenger", img: "https://upload.wikimedia.org/wikipedia/commons/8/83/Facebook_Messenger_logo_2020.svg.png" },
+            { name: "wechat", img: "https://upload.wikimedia.org/wikipedia/commons/7/79/WeChat_Logo.png" },
+            { name: "yahoo", img: "https://upload.wikimedia.org/wikipedia/commons/7/7e/Yahoo%21_logotype.svg.png" },
+            { name: "tumblr", img: "https://upload.wikimedia.org/wikipedia/commons/5/58/Tumblr_wordmark.svg.png" },
+            { name: "telegram2", img: "https://upload.wikimedia.org/wikipedia/commons/5/56/Telegram_2019_Logo.png" },
+            { name: "messenger2", img: "https://upload.wikimedia.org/wikipedia/commons/d/d1/Facebook_Messenger_logo_2019.png" },
+            { name: "threads", img: "https://upload.wikimedia.org/wikipedia/commons/1/1b/Threads_app_icon.png" },
+            { name: "tumblr2", img: "https://upload.wikimedia.org/wikipedia/commons/7/79/TumblrLogo.png" }
         ];
 
         const item = data[Math.floor(Math.random() * data.length)];
 
+        // إرسال السؤال مع الصورة
         const msg = await conn.sendMessage(m.chat, {
             image: { url: item.img },
             caption: `
@@ -62,7 +63,9 @@ async function handler(m, { conn }) {
                 if (global.gameActive[m.chat]) {
                     const ans = global.gameActive[m.chat].answer;
                     delete global.gameActive[m.chat];
-                    conn.sendMessage(m.chat, { text: `⏰ انتهى الوقت\n✅ الإجابة: ${ans}` }, { quoted: m });
+                    conn.sendMessage(m.chat, {
+                        text: `⏰ انتهى الوقت\n✅ *الإجابة:* ${ans}`
+                    }, { quoted: m });
                 }
             }, 30000)
         };
@@ -83,10 +86,15 @@ handler.before = async (m) => {
     if (userAnswer === game.answer) {
         clearTimeout(game.timeout);
         delete global.gameActive[m.chat];
-        await m.reply(`🎉 إجابة صحيحة!\n💰 +500 نقطة\n> اكتب *لوجو* للعب مرة أخرى`);
+        await m.reply(`
+🎉 *إجابة صحيحة!*
+💰 +500 نقطة
+
+> اكتب *لوجو* للعب مرة أخرى
+        `);
         return true;
     } else if (m.quoted && m.quoted.id === game.messageId) {
-        await m.reply("❌ إجابة خاطئة\n🔁 حاول مرة أخرى");
+        await m.reply("❌ *إجابة خاطئة حاول مرة أخرى*");
         return true;
     }
 
