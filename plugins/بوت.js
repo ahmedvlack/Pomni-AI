@@ -35,35 +35,20 @@ handler.command = /^(بوت)$/i
 
 export default handler
 
-/* ================== AI FUNCTION ================== */
+/* ================== AI بدون مفتاح ================== */
 
 async function askAI(text) {
-
-  const API_KEY = "ضع_مفتاحك_هنا" // 👈 ضع مفتاحك هنا
-
-  const response = await fetch("https://api.openai.com/v1/chat/completions", {
+  const response = await fetch("https://api-inference.huggingface.co/models/microsoft/DialoGPT-medium", {
     method: "POST",
     headers: {
-      "Content-Type": "application/json",
-      "Authorization": `Bearer ${API_KEY}`
+      "Content-Type": "application/json"
     },
     body: JSON.stringify({
-      model: "gpt-4o-mini",
-      messages: [
-        {
-          role: "system",
-          content: "أنت بوت عربي ذكي اسمه بوت بلاك، ترد بشكل احترافي ومختصر وواضح مع الحفاظ على الزخرفة."
-        },
-        {
-          role: "user",
-          content: text
-        }
-      ],
-      temperature: 0.7
+      inputs: text
     })
   })
 
   const data = await response.json()
 
-  return data?.choices?.[0]?.message?.content || "لم أستطع توليد رد."
+  return data?.generated_text || data?.[0]?.generated_text || "لم أستطع توليد رد."
 }
