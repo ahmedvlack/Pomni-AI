@@ -1,9 +1,9 @@
-import fetch from "node-fetch";
+import axios from 'axios';
 
 let timeout = 60000;
 let poin = 4999;
 
-async function handler(m, { conn, command }) {
+async function handler(m, { conn }) {
     if (!global.gameActive) global.gameActive = {};
 
     const oldGame = global.gameActive[m.chat];
@@ -13,19 +13,20 @@ async function handler(m, { conn, command }) {
     }
 
     try {
-        let res = await fetch("https://raw.githubusercontent.com/zyad5yasser/bot-test/master/src/game/لوجو.json");
-        let src = await res.json();
+        const res = await axios.get('https://raw.githubusercontent.com/zyad5yasser/bot-test/master/src/game/لوجو.json');
+        const data = res.data;
 
-        let random = src[Math.floor(Math.random() * src.length)];
+        if (!Array.isArray(data)) return;
 
-        let image = random.data.image;
-        let answer = random.data.jawaban.toLowerCase();
+        const random = data[Math.floor(Math.random() * data.length)];
 
-        let message = await conn.sendMessage(m.chat, {
+        const image = random.data.image;
+        const answer = random.data.jawaban.toLowerCase();
+
+        const message = await conn.sendMessage(m.chat, {
             image: { url: image },
             caption: `
 ╮───────────────────────╭ـ
-│ 🧠 *${command.toUpperCase()}*
 │ ❓ *ما هو اسم هذا الشعار؟*
 │ ⏳ *الوقت : 60 ثانية*
 │ 💰 *الجائزة : ${poin} XP*
@@ -39,14 +40,14 @@ async function handler(m, { conn, command }) {
             messageId: message?.key?.id,
             timeout: setTimeout(() => {
                 if (global.gameActive[m.chat]) {
-                    let ans = global.gameActive[m.chat].answer;
+                    const ans = global.gameActive[m.chat].answer;
                     delete global.gameActive[m.chat];
 
                     conn.sendMessage(m.chat, {
                         text: `
 ╮───────────────────────╭ـ
 │ ⏰ *انتهى الوقت*
-│ ✅ *الإجابة : ${ans}*
+│ ✅ *الإجابة هي : ${ans}*
 ╯───────────────────────╰ـ
                         `.trim()
                     }, { quoted: m });
@@ -60,16 +61,15 @@ async function handler(m, { conn, command }) {
 }
 
 handler.before = async (m, { conn }) => {
-    if (!m.quoted || !m.text) return false;
-
+    if (!m.text) return false;
     if (!global.gameActive) global.gameActive = {};
 
     const game = global.gameActive[m.chat];
     if (!game) return false;
 
-    if (m.quoted.id !== game.messageId) return false;
+    if (!m.quoted || m.quoted.id !== game.messageId) return false;
 
-    let userAnswer = m.text.toLowerCase().trim();
+    const userAnswer = m.text.toLowerCase().trim();
 
     // انسحاب
     if (userAnswer === 'انسحاب') {
@@ -79,7 +79,7 @@ handler.before = async (m, { conn }) => {
         await conn.sendMessage(m.chat, {
             text: `
 ╮───────────────────────╭ـ
-│ 🚪 *تم الانسحاب*
+│ 🚪 *تم الانسحاب من اللعبة*
 ╯───────────────────────╰ـ
             `.trim()
         });
@@ -99,19 +99,19 @@ handler.before = async (m, { conn }) => {
 │ 💰 *كسبت ${poin} XP*
 ╯───────────────────────╰ـ
 
-> اكتب *.لوجو* عشان تلعب تاني
+> اكتب *.عين* أو الأمر مرة أخرى للعب
             `.trim()
         });
 
         return true;
     } else {
-        await m.reply("❌ *إجابة غلط حاول تاني*");
+        await m.reply("❌ *إجابة خاطئة حاول مرة أخرى*");
         return true;
     }
 };
 
-handler.help = ["لوجو"];
-handler.tags = ["game"];
-handler.command = /^tebaklogo|لوجو/i;
+handler.help = ['tebaklogo'];
+handler.tags = ['game'];
+handler.command = /^(tebaklogo|لوجو)$/i;
 
 export default handler;
