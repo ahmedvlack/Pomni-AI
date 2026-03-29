@@ -2,6 +2,7 @@ import fetch from 'node-fetch'
 
 let handler = async (m, { conn, text }) => {
 
+  // رسالة عند عدم إدخال نص
   if (!text) return m.reply(`
 ╮───────────────────────╭ـ
 مرحبا بك فى بوت بلاك 🤖
@@ -15,60 +16,106 @@ let handler = async (m, { conn, text }) => {
 
   await m.reply(wait)
 
+  let sender = m.sender
+
   try {
-    let result = await askAI(text)
 
-    if (!result) throw new Error("Empty response")
+    let aiAnswer = await askAI(text)
 
-    await m.reply(`
-╮───────────────────────╭ـ
-${result}
-╰───────────────────────╯
-`)
+    let percent = Math.floor(Math.random() * 101)
+
+    let msg = `*هــل ${text}*\n\n*الــأجــابـه :* ${aiAnswer}\n*الـنـسـبـة :* ${percent}%`
+
+    await conn.sendMessage(m.chat, {
+      text: msg,
+      mentions: [sender]
+    }, { quoted: m })
+
   } catch (e) {
-    console.log("AI ERROR:", e)
-    await m.reply("❌ حدث خطأ في جلب الرد من الذكاء الاصطناعي")
+    console.log(e)
+    m.reply('❌ حدث خطأ في الذكاء الاصطناعي')
   }
 }
 
-handler.help = ["بوت"]
-handler.tags = ["ai"]
-handler.command = /^(بوت)$/i
+handler.command = /^هل$/i
+handler.group = true
+handler.tags = ['fun']
 
 export default handler
 
 /* ================== AI FUNCTION ================== */
 
-async function askAI(text) {
-  const response = await fetch("https://api-inference.huggingface.co/models/gpt2", {
+async function askAI(question) {
+
+  let linkaiList = []
+  let linkaiId = generateRandomString(21)
+  let Baseurl = "https://vipcleandx.xyz/"
+
+  linkaiList.push({
+    content: `أجب فقط بكلمة واحدة (نعم أو لا أو ربما) على السؤال:\n${question}`,
+    role: "user",
+    time: formatTime(),
+    isMe: true
+  })
+
+  linkaiList.push({
+    content: "thinking...",
+    role: "assistant",
+    time: formatTime(),
+    isMe: false
+  })
+
+  let response = await fetch(Baseurl + "v1/chat/gpt/", {
     method: "POST",
     headers: {
-      "Content-Type": "application/json"
+      "Content-Type": "application/json",
+      "X-Forwarded-For": generateRandomIP(),
+      "Referer": Baseurl,
+      "accept": "application/json"
     },
     body: JSON.stringify({
-      inputs: text,
-      parameters: {
-        max_new_tokens: 100,
-        return_full_text: false
-      }
+      list: linkaiList,
+      id: linkaiId,
+      title: question,
+      prompt: "Answer briefly.",
+      temperature: 0.5,
+      models: "0",
+      continuous: true
     })
   })
 
-  const data = await response.json()
+  let data = await response.text()
 
-  console.log("API RESPONSE:", data)
+  try {
+    let json = JSON.parse(data)
 
-  if (Array.isArray(data) && data[0]?.generated_text) {
-    return data[0].generated_text
+    let result = json?.data || json?.message || json?.content
+
+    if (!result) return "لا أعلم"
+
+    return result
+
+  } catch {
+    return data || "لا أعلم"
   }
+}
 
-  if (data?.generated_text) {
-    return data.generated_text
+/* ================== HELPERS ================== */
+
+function generateRandomString(length) {
+  const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
+  let result = ''
+  for (let i = 0; i < length; i++) {
+    result += chars[Math.floor(Math.random() * chars.length)]
   }
+  return result
+}
 
-  if (data?.error) {
-    return "⚠️ خطأ من السيرفر: " + data.error
-  }
+function generateRandomIP() {
+  return Array.from({ length: 4 }, () => Math.floor(Math.random() * 256)).join('.')
+}
 
-  return "لم يتم الحصول على رد من الذكاء الاصطناعي."
+function formatTime() {
+  let d = new Date()
+  return `${d.getHours()}:${d.getMinutes()}:${d.getSeconds()}`
 }
