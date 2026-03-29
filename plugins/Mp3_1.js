@@ -15,7 +15,7 @@ let handler = async (m, { conn }) => {
     )
 }
 
-// الأمر يشتغل مباشرة بدون prefix
-handler.command = /^(بودعك|الوداع)$/i
+// أوامر ثابتة فقط
+handler.command = ['بودعك', 'الوداع']
 
 export default handler
