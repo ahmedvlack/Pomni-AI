@@ -8,37 +8,37 @@ async function handler(m, { conn }) {
 
     try {
         const data = [
-            { name: "facebook", img: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAF..." },
-            { name: "instagram", img: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAF..." },
-            { name: "whatsapp", img: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAF..." },
-            { name: "twitter", img: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAF..." },
-            { name: "snapchat", img: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAF..." },
-            { name: "linkedin", img: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAF..." },
-            { name: "tiktok", img: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAF..." },
-            { name: "youtube", img: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAF..." },
-            { name: "google", img: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAF..." },
-            { name: "spotify", img: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAF..." },
-            { name: "amazon", img: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAF..." },
-            { name: "paypal", img: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAF..." },
-            { name: "netflix", img: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAF..." },
-            { name: "airbnb", img: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAF..." },
-            { name: "uber", img: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAF..." },
-            { name: "discord", img: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAF..." },
-            { name: "reddit", img: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAF..." },
-            { name: "shazam", img: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAF..." },
-            { name: "telegram", img: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAF..." },
-            { name: "pinterest", img: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAF..." },
-            { name: "twitch", img: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAF..." },
-            { name: "skype", img: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAF..." },
-            { name: "viber", img: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAF..." },
-            { name: "soundcloud", img: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAF..." },
-            { name: "snapseed", img: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAF..." },
-            { name: "evernote", img: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAF..." },
-            { name: "skyscanner", img: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAF..." },
-            { name: "tripadvisor", img: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAF..." },
-            { name: "zoom", img: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAF..." },
-            { name: "quora", img: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAF..." },
-            { name: "slack", img: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAF..." }
+            { name: "facebook", img: "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD..." },
+            { name: "instagram", img: "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD..." },
+            { name: "whatsapp", img: "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD..." },
+            { name: "twitter", img: "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD..." },
+            { name: "snapchat", img: "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD..." },
+            { name: "linkedin", img: "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD..." },
+            { name: "tiktok", img: "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD..." },
+            { name: "youtube", img: "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD..." },
+            { name: "google", img: "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD..." },
+            { name: "spotify", img: "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD..." },
+            { name: "amazon", img: "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD..." },
+            { name: "paypal", img: "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD..." },
+            { name: "netflix", img: "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD..." },
+            { name: "airbnb", img: "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD..." },
+            { name: "uber", img: "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD..." },
+            { name: "discord", img: "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD..." },
+            { name: "reddit", img: "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD..." },
+            { name: "shazam", img: "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD..." },
+            { name: "telegram", img: "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD..." },
+            { name: "pinterest", img: "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD..." },
+            { name: "twitch", img: "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD..." },
+            { name: "skype", img: "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD..." },
+            { name: "viber", img: "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD..." },
+            { name: "soundcloud", img: "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD..." },
+            { name: "snapseed", img: "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD..." },
+            { name: "evernote", img: "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD..." },
+            { name: "skyscanner", img: "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD..." },
+            { name: "tripadvisor", img: "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD..." },
+            { name: "zoom", img: "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD..." },
+            { name: "quora", img: "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD..." },
+            { name: "slack", img: "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD..." }
         ];
 
         const item = data[Math.floor(Math.random() * data.length)];
@@ -79,7 +79,7 @@ handler.before = async (m) => {
     const game = global.gameActive?.[m.chat];
     if (!game) return false;
 
-    let userAnswer = m.text.toLowerCase().trim();
+    const userAnswer = m.text.toLowerCase().trim();
 
     if (userAnswer === game.answer) {
         clearTimeout(game.timeout);
