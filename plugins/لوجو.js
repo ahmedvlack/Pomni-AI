@@ -1,6 +1,6 @@
 import fetch from 'node-fetch';
 
-let timeout = 30000;
+let timeout = 60000;
 let poin = 4999;
 
 async function handler(m, { conn }) {
@@ -40,7 +40,7 @@ async function handler(m, { conn }) {
             caption: `
 ╮───────────────────────╭ـ
 │ ❓ *ما هو اسم هذا الشعار؟*
-│ ⏳ *الوقت : 30 ثانية*
+│ ⏳ *الوقت : 60 ثانية*
 │ 💰 *الجائزة : ${poin} XP*
 ╯───────────────────────╰ـ
 
