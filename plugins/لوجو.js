@@ -1,14 +1,12 @@
 async function handler(m, { conn }) {
     if (!global.gameActive) global.gameActive = {};
 
-    // حذف اللعبة القديمة
     if (global.gameActive[m.chat]) {
         clearTimeout(global.gameActive[m.chat].timeout);
         delete global.gameActive[m.chat];
     }
 
     try {
-        // رابط JSON (مشفر)
         const res = await fetch('https://raw.githubusercontent.com/zyad5yasser/bot-test/master/src/game/%D9%84%D9%88%D8%AC%D9%88.json');
         const data = await res.json();
 
@@ -18,12 +16,16 @@ async function handler(m, { conn }) {
 
         const item = data[Math.floor(Math.random() * data.length)];
 
-        if (!item.image || !item.response) {
-            return m.reply("❌ سؤال غير صالح");
+        // دعم كل الاحتمالات
+        const image = item.image || item.img;
+        const answer = (item.response || item.name || item.answer || "").toLowerCase();
+
+        if (!image || !answer) {
+            return m.reply("❌ البيانات داخل JSON غير متوافقة");
         }
 
         const msg = await conn.sendMessage(m.chat, {
-            image: { url: item.image },
+            image: { url: image },
             caption: `
 ╮───────────────────────╭ـ
 │ ❓ *ما اسم هذا التطبيق؟*
@@ -35,8 +37,8 @@ async function handler(m, { conn }) {
         });
 
         global.gameActive[m.chat] = {
-            answer: item.response.toLowerCase(),
-            image: item.image,
+            answer,
+            image,
             messageId: msg.key.id,
             timeout: setTimeout(() => {
                 if (global.gameActive[m.chat]) {
@@ -61,7 +63,6 @@ async function handler(m, { conn }) {
     }
 }
 
-// التحقق من الإجابة
 handler.before = async (m, { conn }) => {
     if (!m.quoted || !m.text) return false;
 
@@ -72,7 +73,6 @@ handler.before = async (m, { conn }) => {
 
     let userAnswer = m.text.toLowerCase().trim();
 
-    // إجابة صحيحة
     if (userAnswer === game.answer) {
         clearTimeout(game.timeout);
         delete global.gameActive[m.chat];
