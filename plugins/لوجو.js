@@ -8,36 +8,46 @@ async function handler(m, { conn }) {
 
     try {
         const data = [
-            { name: "facebook", img: "https://cdn.simpleicons.org/facebook/1877F2" },
-            { name: "instagram", img: "https://cdn.simpleicons.org/instagram/E4405F" },
-            { name: "whatsapp", img: "https://cdn.simpleicons.org/whatsapp/25D366" },
-            { name: "youtube", img: "https://cdn.simpleicons.org/youtube/FF0000" },
-            { name: "twitter", img: "https://cdn.simpleicons.org/twitter/1DA1F2" },
-            { name: "tiktok", img: "https://cdn.simpleicons.org/tiktok/000000" },
-            { name: "snapchat", img: "https://cdn.simpleicons.org/snapchat/FFFC00" },
-            { name: "telegram", img: "https://cdn.simpleicons.org/telegram/26A5E4" },
-            { name: "linkedin", img: "https://cdn.simpleicons.org/linkedin/0A66C2" },
-            { name: "spotify", img: "https://cdn.simpleicons.org/spotify/1DB954" },
-            { name: "netflix", img: "https://cdn.simpleicons.org/netflix/E50914" },
-            { name: "amazon", img: "https://cdn.simpleicons.org/amazon/FF9900" },
-            { name: "paypal", img: "https://cdn.simpleicons.org/paypal/00457C" },
-            { name: "discord", img: "https://cdn.simpleicons.org/discord/5865F2" },
-            { name: "reddit", img: "https://cdn.simpleicons.org/reddit/FF4500" },
-            { name: "skype", img: "https://cdn.simpleicons.org/skype/00AFF0" },
-            { name: "viber", img: "https://cdn.simpleicons.org/viber/7360F2" },
-            { name: "slack", img: "https://cdn.simpleicons.org/slack/4A154B" },
-            { name: "zoom", img: "https://cdn.simpleicons.org/zoom/2D8CFF" },
-            { name: "google", img: "https://cdn.simpleicons.org/google/4285F4" },
-            { name: "apple", img: "https://cdn.simpleicons.org/apple/000000" },
-            { name: "github", img: "https://cdn.simpleicons.org/github/181717" },
-            { name: "twitch", img: "https://cdn.simpleicons.org/twitch/9146FF" },
-            { name: "ebay", img: "https://cdn.simpleicons.org/ebay/E53238" },
-            { name: "wechat", img: "https://cdn.simpleicons.org/wechat/07C160" },
-            { name: "messenger", img: "https://cdn.simpleicons.org/messenger/00B2FF" },
-            { name: "quora", img: "https://cdn.simpleicons.org/quora/B92B27" },
-            { name: "tripadvisor", img: "https://cdn.simpleicons.org/tripadvisor/34E0A1" },
-            { name: "uber", img: "https://cdn.simpleicons.org/uber/000000" },
-            { name: "airbnb", img: "https://cdn.simpleicons.org/airbnb/FF5A5F" }
+            {
+                name: "whatsapp",
+                img: "https://play-lh.googleusercontent.com/8A9Gd4P9zPp2Y7G2dXlV7Qv4z4v1iZ9X1N8f8Z5G3P5Gk5G3P5G=s512"
+            },
+            {
+                name: "facebook",
+                img: "https://play-lh.googleusercontent.com/Zj7v1Q5V7d7YQ5n1Z1X7Z5V1Z1X7Z5V=s512"
+            },
+            {
+                name: "instagram",
+                img: "https://play-lh.googleusercontent.com/VRMWdJ6fX5U6d5V5Y7V5Y7V5Y7V=s512"
+            },
+            {
+                name: "youtube",
+                img: "https://play-lh.googleusercontent.com/youtube_icon=s512"
+            },
+            {
+                name: "tiktok",
+                img: "https://play-lh.googleusercontent.com/tiktok_icon=s512"
+            },
+            {
+                name: "telegram",
+                img: "https://play-lh.googleusercontent.com/telegram_icon=s512"
+            },
+            {
+                name: "snapchat",
+                img: "https://play-lh.googleusercontent.com/snapchat_icon=s512"
+            },
+            {
+                name: "spotify",
+                img: "https://play-lh.googleusercontent.com/spotify_icon=s512"
+            },
+            {
+                name: "netflix",
+                img: "https://play-lh.googleusercontent.com/netflix_icon=s512"
+            },
+            {
+                name: "amazon",
+                img: "https://play-lh.googleusercontent.com/amazon_icon=s512"
+            }
         ];
 
         const item = data[Math.floor(Math.random() * data.length)];
