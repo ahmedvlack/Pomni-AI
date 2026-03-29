@@ -2,97 +2,108 @@ import fetch from 'node-fetch'
 
 let handler = async (m, { conn, text }) => {
 
-  if (!text) return m.reply(`
+  if (!text) {
+    return m.reply(`
 ╮───────────────────────╭ـ
 مرحبا بك فى بوت بلاك 🤖
 
+✔ تم تفعيل المحادثة الذكية
+
+الآن يمكنك الرد على البوت وسيجيبك تلقائياً بالذكاء الاصطناعي
+
 مثال:
-│❏ بوت من نيكولا تسلا
-│❏ بوت افضل انمى
-│❏ بوت هات فزورة أو لغز
+│❏ اكتب أي سؤال
+│❏ أو رد على رسالة البوت
 ╰───────────────────────╯
 `)
+  }
 
   await m.reply(wait)
 
-  try {
+  let ai = await askAI(text)
 
-    let aiAnswer = await askAI(text)
-
-    if (!aiAnswer) throw new Error("Empty AI response")
-
-    let percent = Math.floor(Math.random() * 101)
-
-    let msg = `*هــل ${text}*\n\n*الــأجــابـه :* ${aiAnswer}\n*الـنـسـبـة :* ${percent}%`
-
-    await conn.sendMessage(m.chat, {
-      text: msg,
-      mentions: [m.sender]
-    }, { quoted: m })
-
-  } catch (e) {
-    console.log("ERROR:", e)
-    m.reply("❌ فشل في جلب الرد من الذكاء الاصطناعي")
-  }
+  await conn.sendMessage(m.chat, {
+    text: `
+╮───────────────────────╭ـ
+${ai}
+╰───────────────────────╯
+`,
+    quoted: m
+  })
 }
 
-handler.command = /^هل$/i
-handler.group = true
-handler.tags = ['fun']
+handler.help = ["بوت"]
+handler.tags = ["ai"]
+handler.command = /^(بوت)$/i
 
 export default handler
 
-/* ================== AI ================== */
+/* ================== AUTO REPLY AI ================== */
 
-async function askAI(question) {
+handler.before = async function (m, { conn }) {
+
+  // تجاهل الرسائل بدون رد
+  if (!m.quoted || !m.quoted.fromMe) return
+
+  // منع تفعيل على أوامر البوت الأخرى
+  if (!m.text) return
+
+  try {
+    let ai = await askAI(m.text)
+
+    await conn.sendMessage(m.chat, {
+      text: `
+╮───────────────────────╭ـ
+${ai}
+╰───────────────────────╯
+`,
+      quoted: m
+    })
+
+  } catch (e) {
+    console.log(e)
+  }
+}
+
+/* ================== AI FUNCTION ================== */
+
+async function askAI(text) {
 
   let Baseurl = "https://vipcleandx.xyz/"
 
-  let payload = {
-    list: [
-      {
-        content: `أجب بكلمة واحدة فقط (نعم أو لا أو ربما): ${question}`,
-        role: "user",
-        time: formatTime(),
-        isMe: true
-      }
-    ],
-    id: generateRandomString(21),
-    title: question,
-    prompt: "",
-    temperature: 0.5,
-    models: "0",
-    continuous: true
-  }
-
-  let res = await fetch(Baseurl + "v1/chat/gpt/", {
+  let response = await fetch(Baseurl + "v1/chat/gpt/", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
       "Referer": Baseurl
     },
-    body: JSON.stringify(payload)
+    body: JSON.stringify({
+      list: [
+        {
+          content: text,
+          role: "user",
+          time: formatTime(),
+          isMe: true
+        }
+      ],
+      id: generateRandomString(21),
+      title: text,
+      prompt: "You are a helpful AI assistant.",
+      temperature: 0.7,
+      models: "0",
+      continuous: true
+    })
   })
 
-  let data = await res.text()
-
-  console.log("RAW API RESPONSE:", data)
+  let data = await response.text()
 
   try {
     let json = JSON.parse(data)
 
-    // محاولة استخراج الرد بأكثر من شكل
-    let result =
-      json?.data ||
-      json?.message ||
-      json?.content ||
-      json?.result
+    return json?.data || json?.message || json?.content || "لا يوجد رد"
 
-    return result || "لا يوجد رد من الـ API"
-
-  } catch (err) {
-    console.log("PARSE ERROR:", err)
-    return data || "خطأ في تحليل الرد"
+  } catch {
+    return data || "لا يوجد رد"
   }
 }
 
