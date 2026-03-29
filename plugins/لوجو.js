@@ -8,31 +8,42 @@ async function handler(m, { conn }) {
 
     try {
         const data = [
-            { answers: ["facebook","fb","فيسبوك","فيس"], domain: "facebook.com" },
-            { answers: ["instagram","insta","ig","انستجرام"], domain: "instagram.com" },
-            { answers: ["whatsapp","واتساب","واتس","wa"], domain: "whatsapp.com" },
-            { answers: ["youtube","yt","يوتيوب"], domain: "youtube.com" },
-            { answers: ["twitter","x","تويتر"], domain: "twitter.com" },
-            { answers: ["tiktok","تيك توك","tik tok"], domain: "tiktok.com" },
-            { answers: ["snapchat","سناب","سناب شات"], domain: "snapchat.com" },
-            { answers: ["telegram","تلجرام"], domain: "telegram.org" },
-            { answers: ["discord","ديسكورد"], domain: "discord.com" },
-            { answers: ["linkedin","لينكدان"], domain: "linkedin.com" },
-            { answers: ["spotify","سبوتيفاي"], domain: "spotify.com" },
-            { answers: ["netflix","نتفليكس"], domain: "netflix.com" },
-            { answers: ["amazon","امازون"], domain: "amazon.com" },
-            { answers: ["paypal","بايبال"], domain: "paypal.com" },
-            { answers: ["reddit","ريديت"], domain: "reddit.com" },
-            { answers: ["twitch","تويتش"], domain: "twitch.tv" },
-            { answers: ["github","جيت هاب"], domain: "github.com" },
-            { answers: ["google","جوجل"], domain: "google.com" },
-            { answers: ["apple","ابل"], domain: "apple.com" }
+            { answers: ["facebook","fb","فيسبوك","فيس"], img: "https://cdn-icons-png.flaticon.com/512/124/124010.png" },
+            { answers: ["instagram","insta","ig","انستجرام","انستا"], img: "https://cdn-icons-png.flaticon.com/512/2111/2111463.png" },
+            { answers: ["whatsapp","واتساب","واتس","wa"], img: "https://cdn-icons-png.flaticon.com/512/733/733585.png" },
+            { answers: ["youtube","yt","يوتيوب"], img: "https://cdn-icons-png.flaticon.com/512/1384/1384060.png" },
+            { answers: ["twitter","x","تويتر"], img: "https://cdn-icons-png.flaticon.com/512/733/733579.png" },
+            { answers: ["tiktok","تيك توك","tik tok"], img: "https://cdn-icons-png.flaticon.com/512/3046/3046121.png" },
+            { answers: ["snapchat","سناب","سناب شات"], img: "https://cdn-icons-png.flaticon.com/512/733/733576.png" },
+            { answers: ["telegram","تلجرام","تيليجرام"], img: "https://cdn-icons-png.flaticon.com/512/2111/2111646.png" },
+            { answers: ["discord","ديسكورد"], img: "https://cdn-icons-png.flaticon.com/512/2111/2111370.png" },
+            { answers: ["linkedin","لينكدان"], img: "https://cdn-icons-png.flaticon.com/512/174/174857.png" },
+            { answers: ["pinterest","بنترست"], img: "https://cdn-icons-png.flaticon.com/512/733/733558.png" },
+            { answers: ["spotify","سبوتيفاي"], img: "https://cdn-icons-png.flaticon.com/512/174/174872.png" },
+            { answers: ["netflix","نتفليكس"], img: "https://cdn-icons-png.flaticon.com/512/5977/5977590.png" },
+            { answers: ["amazon","امازون"], img: "https://cdn-icons-png.flaticon.com/512/5968/5968784.png" },
+            { answers: ["paypal","بايبال"], img: "https://cdn-icons-png.flaticon.com/512/174/174861.png" },
+            { answers: ["reddit","ريديت"], img: "https://cdn-icons-png.flaticon.com/512/2111/2111589.png" },
+            { answers: ["skype","سكايب"], img: "https://cdn-icons-png.flaticon.com/512/174/174869.png" },
+            { answers: ["viber","فايبر"], img: "https://cdn-icons-png.flaticon.com/512/2111/2111708.png" },
+            { answers: ["slack","سلاك"], img: "https://cdn-icons-png.flaticon.com/512/2111/2111615.png" },
+            { answers: ["zoom","زووم"], img: "https://cdn-icons-png.flaticon.com/512/5968/5968756.png" },
+            { answers: ["google","جوجل"], img: "https://cdn-icons-png.flaticon.com/512/300/300221.png" },
+            { answers: ["apple","ابل"], img: "https://cdn-icons-png.flaticon.com/512/0/747.png" },
+            { answers: ["github","جيت هاب"], img: "https://cdn-icons-png.flaticon.com/512/733/733553.png" },
+            { answers: ["twitch","تويتش"], img: "https://cdn-icons-png.flaticon.com/512/2111/2111668.png" },
+            { answers: ["ebay","ايباي"], img: "https://cdn-icons-png.flaticon.com/512/732/732221.png" },
+            { answers: ["wechat","ويتشات"], img: "https://cdn-icons-png.flaticon.com/512/2111/2111728.png" },
+            { answers: ["messenger","ماسنجر"], img: "https://cdn-icons-png.flaticon.com/512/733/733547.png" },
+            { answers: ["quora","كورا"], img: "https://cdn-icons-png.flaticon.com/512/733/733600.png" },
+            { answers: ["tripadvisor","تريب ادفايزر"], img: "https://cdn-icons-png.flaticon.com/512/733/733597.png" },
+            { answers: ["uber","اوبر"], img: "https://cdn-icons-png.flaticon.com/512/732/732200.png" }
         ];
 
         const item = data[Math.floor(Math.random() * data.length)];
 
         const msg = await conn.sendMessage(m.chat, {
-            image: { url: `https://logo.clearbit.com/${item.domain}` },
+            image: { url: item.img },
             caption: `
 ╮───────────────────────╭
 │ ❓ *ما اسم هذا التطبيق؟*
@@ -45,7 +56,6 @@ async function handler(m, { conn }) {
 
         global.gameActive[m.chat] = {
             answers: item.answers,
-            messageId: msg.key.id,
             timeout: setTimeout(() => {
                 if (global.gameActive[m.chat]) {
                     const ans = global.gameActive[m.chat].answers[0];
@@ -64,7 +74,7 @@ async function handler(m, { conn }) {
 }
 
 
-// 🔥 دالة الذكاء (similarity)
+// 🔥 دالة الذكاء
 function similarity(s1, s2) {
     let longer = s1.length > s2.length ? s1 : s2;
     let shorter = s1.length > s2.length ? s2 : s1;
@@ -81,14 +91,12 @@ function editDistance(s1, s2) {
         let lastValue = i;
         for (let j = 0; j <= s2.length; j++) {
             if (i === 0) costs[j] = j;
-            else {
-                if (j > 0) {
-                    let newValue = costs[j - 1];
-                    if (s1.charAt(i - 1) !== s2.charAt(j - 1))
-                        newValue = Math.min(Math.min(newValue, lastValue), costs[j]) + 1;
-                    costs[j - 1] = lastValue;
-                    lastValue = newValue;
-                }
+            else if (j > 0) {
+                let newValue = costs[j - 1];
+                if (s1.charAt(i - 1) !== s2.charAt(j - 1))
+                    newValue = Math.min(Math.min(newValue, lastValue), costs[j]) + 1;
+                costs[j - 1] = lastValue;
+                lastValue = newValue;
             }
         }
         if (i > 0) costs[s2.length] = lastValue;
@@ -106,30 +114,17 @@ handler.before = async (m) => {
 
     const userAnswer = m.text.toLowerCase().trim();
 
-    let bestScore = 0;
-    let isCorrect = false;
-
     for (let ans of game.answers) {
-        const score = similarity(userAnswer, ans);
+        if (userAnswer === ans || similarity(userAnswer, ans) >= 0.7) {
+            clearTimeout(game.timeout);
+            delete global.gameActive[m.chat];
 
-        if (score > bestScore) bestScore = score;
-
-        if (userAnswer === ans || score >= 0.7) {
-            isCorrect = true;
-            break;
-        }
-    }
-
-    if (isCorrect) {
-        clearTimeout(game.timeout);
-        delete global.gameActive[m.chat];
-
-        await m.reply(`
+            await m.reply(`
 🎉 *إجابة صحيحة!*  
-📊 نسبة التطابق: ${(bestScore * 100).toFixed(0)}%
 💰 +500 نقطة
-        `);
-        return true;
+            `);
+            return true;
+        }
     }
 
     return false;
