@@ -83,7 +83,7 @@ handler.before = async (m, { conn }) => {
             game.turn = 'X';
 
             return conn.sendMessage(m.chat, {
-                text: `🤝 تعادل!\n𖤍 مستوى أصعب (4x4)\n\n${drawBoard(game)}\n\n@${game.player1.split('@')[0]} ضد @${game.player2.split('@')[0]}\n\n@${game.player1.split('@')[0]} يبدأ!`,
+                text: `🤝 تعادل!\n🎯 مستوى أصعب (4x4)\n\n${drawBoard(game)}\n\n@${game.player1.split('@')[0]} ضد @${game.player2.split('@')[0]}\n\n@${game.player1.split('@')[0]} يبدأ!`,
                 mentions: [game.player1, game.player2]
             });
         }
@@ -121,7 +121,11 @@ const drawBoard = (game) => {
         let row = board.slice(i, i + size).map((c, idx) => {
             if (c === 'X') return '❌';
             if (c === 'O') return '⭕';
-            if (size === 4) return `𖤍${i + idx + 1}`;
+
+            // 🎯 المستوى الثاني → أرقام فقط
+            if (size === 4) return `${i + idx + 1}`;
+
+            // المستوى الأول كما هو
             return `${i + idx + 1}️⃣`;
         }).join(' | ');
 
@@ -130,26 +134,19 @@ const drawBoard = (game) => {
     return out;
 };
 
-// 🧠 فحص الفوز (4 متتالية في المستوى الثاني)
+// 🧠 فحص الفوز
 const checkWinner = (game) => {
     const { board, size } = game;
 
     const lines = [];
 
-    // صفوف
-    for (let i = 0; i < size; i++) {
+    for (let i = 0; i < size; i++)
         lines.push([...Array(size)].map((_, j) => i * size + j));
-    }
 
-    // أعمدة
-    for (let i = 0; i < size; i++) {
+    for (let i = 0; i < size; i++)
         lines.push([...Array(size)].map((_, j) => j * size + i));
-    }
 
-    // قطري ↘
     lines.push([...Array(size)].map((_, i) => i * (size + 1)));
-
-    // قطري ↙
     lines.push([...Array(size)].map((_, i) => (i + 1) * (size - 1)));
 
     for (const line of lines) {
