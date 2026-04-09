@@ -28,28 +28,14 @@ async function handler(m, { conn, command, args }) {
     const menu = `
 ╭─┈─┈─┈─⟞🕸️⟝─┈─┈─┈─╮
 - *.تفعيل ايقاف_الترحيب*
-> *_البوت هيبطل يرحب ب الاعضاء_*
-
 - *.تفعيل تشغيل_الترحيب*
-> *_البوت يرحب ب الاعضاء_*
-
 - *.تفعيل تشغيل_الادمن*
-> *_البوت يرد على المشرفين فقط_*
-
 - *.تفعيل ايقاف_الادمن*
-> *_البوت يرد على الجميع_*
-
 - *.تفعيل ايقاف_الخاص*
-> *_البوت يكلم المطور فقط في الخاص_*
-
 - *.تفعيل تشغيل_الخاص*
-> *_البوت يكلم الجميع_*
-
 - *.تفعيل مضاد_لينكات*
-> *_حذف اي رابط + طرد العضو_*
-
 - *.تفعيل ايقاف_مضاد_لينكات*
-> *_إيقاف حذف الروابط_*
+- *.تفعيل جروب* 🔥 جديد
 ╰─┈─┈─┈─⟞🕸️⟝─┈─┈─┈─╯
 `;
 
@@ -60,53 +46,58 @@ async function handler(m, { conn, command, args }) {
 
     const actions = {
 
+        'جروب': () => {
+            if (!m.isOwner && !m.isAdmin) return '*❌ هذا الأمر للمشرفين فقط*';
+            db.settings[chatId].groupControl = true;
+            return '*✅ تم تفعيل اوامر الجروب*\n> استخدم (.قفل / .فتح / .تغير)*';
+        },
+
         'ايقاف_الترحيب': () => {
             if (!m.isOwner && !m.isAdmin) return '*❌ ~ هذا الأمر للمشرفين فقط*';
             db.settings[chatId].noWelcome = true;
-            return '*✅ ~ تم تفعيل وضع عدم الترحيب*\n> *_البوت هيبطل يرحب ب الاعضاء_*';
+            return '*✅ ~ تم تفعيل وضع عدم الترحيب*';
         },
 
         'تشغيل_الترحيب': () => {
             if (!m.isOwner && !m.isAdmin) return '*❌ ~ هذا الأمر للمشرفين فقط*';
             db.settings[chatId].noWelcome = false;
-            return '*✅ ~ تم تفعيل وضع الترحيب*\n> *_البوت يرحب ب الاعضاء_*';
+            return '*✅ ~ تم تفعيل وضع الترحيب*';
         },
 
         'تشغيل_الادمن': () => {
             if (!m.isOwner && !m.isAdmin) return '*❌ ~ هذا الأمر للمشرفين فقط*';
             db.settings[chatId].adminOnly = true;
-            return '*✅ ~ تم تفعيل وضع الادمن*\n> *_البوت سيتفاعل مع المشرفين فقط_*';
+            return '*✅ ~ تم تفعيل وضع الادمن*';
         },
 
         'ايقاف_الادمن': () => {
             if (!m.isOwner && !m.isAdmin) return '*❌ ~ هذا الأمر للمشرفين فقط*';
             db.settings[chatId].adminOnly = false;
-            return '*✅ ~ تم فك وضع الادمن*\n> *_البوت سيتفاعل مع جميع الأعضاء_*';
+            return '*✅ ~ تم فك وضع الادمن*';
         },
 
         'ايقاف_الخاص': () => {
             if (!m.isOwner) return '*❌ ~ هذا الأمر للمطور فقط*';
             db.developerPrivate = true;
-            return '*✅ ~ تم تفعيل وضع الخاص للمطور*\n> *_البوت سيكلم المطور فقط في الخاص_*';
+            return '*✅ ~ تم تفعيل وضع الخاص للمطور*';
         },
 
         'تشغيل_الخاص': () => {
             if (!m.isOwner) return '*❌ ~ هذا الأمر للمطور فقط*';
             db.developerPrivate = false;
-            return '*✅ ~ تم فك وضع الخاص للمطور*\n> *_البوت سيكلم الجميع_*';
+            return '*✅ ~ تم فك وضع الخاص للمطور*';
         },
 
-        // 🔥 مضاد الروابط
         'مضاد_لينكات': () => {
             if (!m.isOwner && !m.isAdmin) return '*❌ ~ هذا الأمر للمشرفين فقط*';
             db.settings[chatId].antiLinks = true;
-            return '*✅ ~ تم تفعيل مضاد الروابط*\n> *_سيتم حذف أي رابط + طرد المرسل_*';
+            return '*✅ ~ تم تفعيل مضاد الروابط*';
         },
 
         'ايقاف_مضاد_لينكات': () => {
             if (!m.isOwner && !m.isAdmin) return '*❌ ~ هذا الأمر للمشرفين فقط*';
             db.settings[chatId].antiLinks = false;
-            return '*✅ ~ تم إيقاف مضاد الروابط*\n> *_يمكن إرسال الروابط الآن_*';
+            return '*✅ ~ تم إيقاف مضاد الروابط*';
         }
 
     };
@@ -130,19 +121,41 @@ handler.before = async (m, { conn }) => {
     const db = global.database;
     const settings = db.settings?.[m.chat] || {};
 
+    const text = (
+        m.text ||
+        m.message?.conversation ||
+        m.message?.extendedTextMessage?.text ||
+        ''
+    );
+
+    // 🔥 اوامر الجروب الجديدة
+    if (settings.groupControl && m.isGroup) {
+
+        if (text === '.قفل') {
+            if (!m.isAdmin && !m.isOwner) return;
+            await conn.groupSettingUpdate(m.chat, 'announcement');
+            return m.reply('🔒 تم قفل الجروب');
+        }
+
+        if (text === '.فتح') {
+            if (!m.isAdmin && !m.isOwner) return;
+            await conn.groupSettingUpdate(m.chat, 'not_announcement');
+            return m.reply('🔓 تم فتح الجروب');
+        }
+
+        if (text === '.تغير') {
+            if (!m.isAdmin && !m.isOwner) return;
+            await conn.groupRevokeInvite(m.chat);
+            return m.reply('🔁 تم تغيير رابط الجروب');
+        }
+    }
+
     if (settings.adminOnly && !m.isOwner && !m.isAdmin) return true;
     if (db.developerPrivate && !m.isOwner && !m.isGroup) return true;
     if (db.ban && !m.isOwner && db.ban[m.sender]) return true;
 
-    // 🔥 مضاد الروابط (نسخة قوية)
+    // 🔥 مضاد الروابط
     if (settings.antiLinks && m.isGroup && !m.isAdmin && !m.isOwner) {
-
-        const text = (
-            m.text ||
-            m.message?.conversation ||
-            m.message?.extendedTextMessage?.text ||
-            ''
-        );
 
         const linkRegex = /(https?:\/\/|www\.|chat\.whatsapp\.com|t\.me|discord\.gg)/i;
 
