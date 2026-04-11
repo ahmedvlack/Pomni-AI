@@ -3,7 +3,6 @@ let handler = async (m, { conn, text }) => {
 
   let sender = m.sender
 
-  // قائمة الإجابات (بدون أي دالة خارجية)
   let answers = [
     'اه',
     'ممكن',
@@ -13,10 +12,7 @@ let handler = async (m, { conn, text }) => {
     'مستحيل'
   ]
 
-  // اختيار عشوائي
   let answer = answers[Math.floor(Math.random() * answers.length)]
-
-  // نسبة مئوية
   let percent = Math.floor(Math.random() * 101)
 
   let msg = `
@@ -36,10 +32,10 @@ let handler = async (m, { conn, text }) => {
 // الأمر
 handler.command = /^بلاك|بلاكى$/i
 
-// نفس التصنيفات
-handler.tags = ['fun']
+// 👇 هذا هو المهم
+handler.category = 'games'
 
-// اختياري لو تبيه قروبات فقط
+// اختياري
 handler.group = true
 
 export default handler
