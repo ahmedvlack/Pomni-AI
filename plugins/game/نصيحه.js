@@ -2,8 +2,15 @@ let handler = async (m, { conn, text}) => {
 
 m.reply(`*╔═══════════════════════════*\n➢ *"${pickRandom(global.piropo)}"*\n*╚═══════════════════════════*`)
 }
-handler.tags = ['frases']
+
+// 👇 التعديل هنا
+handler.category = 'games'
+
+// 👇 مهم لظهور الأمر
+handler.usage = ['نصيحه']
+
 handler.command = ['نصيحه']
+
 export default handler
 
 function pickRandom(list) {
